@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diamond DA40 Hangar Interactive</title>
+    <title>Diamond DA40 Top-Down Hangar</title>
     <style>
         * {
             box-sizing: border-box;
@@ -14,7 +14,7 @@
         body {
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(to bottom, #7dd3fc, #e0f2fe);
+            background: #475569; /* Dark asphalt surrounding tarmac */
             overflow: hidden;
             font-family: system-ui, sans-serif;
             position: relative;
@@ -26,47 +26,48 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 10px 20px;
             border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             pointer-events: none;
             text-align: center;
-            color: #1e293b;
+            color: #0f172a;
             font-weight: 500;
             z-index: 10;
         }
 
-        /* Hangar Environment Container */
-        .environment {
+        /* Hangar Canvas Layout */
+        .hangar-layout {
             position: absolute;
-            bottom: 0;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 75vh;
+            height: 100%;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
         }
 
         .hangar-svg {
-            width: 100%;
-            max-width: 1000px;
-            height: auto;
+            width: 100vw;
+            height: 100vh;
         }
 
         /* Moveable Diamond DA40 Styles */
         .airplane {
             position: absolute;
-            width: 180px; /* Slightly wider to accommodate long DA40 wingspan */
+            width: 180px;
             height: auto;
             cursor: move;
             cursor: grab;
             user-select: none;
             touch-action: none;
-            filter: drop-shadow(5px 12px 8px rgba(0, 0, 0, 0.25));
+            /* Casts a realistic drop shadow directly onto the floor */
+            filter: drop-shadow(8px 15px 6px rgba(0, 0, 0, 0.35));
             z-index: 5;
             left: 50%;
-            top: 30%;
+            top: 60%;
             transform: translateX(-50%);
         }
 
@@ -87,52 +88,63 @@
 </head>
 <body>
 
-    <div class="instructions">🛩️ Drag the Diamond DA40 around the architectural hangar!</div>
+    <div class="instructions">🛩️ Park or taxi the Diamond DA40 within the top-down hangar layout!</div>
 
-    <div class="environment">
-        <!-- SVG Airplane Hangar Art -->
-        <svg class="hangar-svg" viewBox="0 0 1000 600" fill="none" xmlns="http://w3.org">
-            <!-- Sky/Horizon Gradients and Ground Tarmac -->
-            <rect x="0" y="450" width="1000" height="150" fill="#94a3b8" />
-            <rect x="0" y="450" width="1000" height="10" fill="#64748b" />
+    <div class="hangar-layout">
+        <!-- SVG Top-Down Hangar Layout -->
+        <svg class="hangar-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://w3.org">
             
-            <!-- Concrete Hangar Floor -->
-            <polygon points="100,470 900,470 950,600 50,600" fill="#cbd5e1" />
-            <!-- Yellow Runway / Hangar Guidance Lines -->
-            <line x1="500" y1="450" x2="500" y2="600" stroke="#f59e0b" stroke-width="6" stroke-dasharray="15, 10" />
-            <line x1="250" y1="470" x2="100" y2="600" stroke="#cbd5e1" stroke-width="4" />
-            <line x1="750" y1="470" x2="900" y2="600" stroke="#cbd5e1" stroke-width="4" />
-
-            <!-- MAIN HANGAR STRUCTURE -->
-            <polygon points="150,470 150,220 500,130 850,220 850,470" fill="#475569" />
-            <line x1="300" y1="470" x2="300" y2="180" stroke="#334155" stroke-width="4" />
-            <line x1="700" y1="470" x2="700" y2="180" stroke="#334155" stroke-width="4" />
-
-            <!-- Main Building Outer Frame -->
-            <rect x="100" y="210" width="50" height="260" fill="#64748b" />
-            <rect x="850" y="210" width="50" height="260" fill="#64748b" />
+            <!-- Concrete Apron/Tarmac Area (Outside the hangar at the bottom) -->
+            <rect x="0" y="550" width="1000" height="450" fill="#64748b" />
             
-            <!-- Arched Roof Structure -->
-            <polygon points="80,210 500,100 920,210 870,230 500,125 130,230" fill="#475569" />
-            <polygon points="100,210 500,110 900,210 500,120" fill="#94a3b8" />
-            <polygon points="80,210 500,100 920,210 920,195 500,85 80,195" fill="#ef4444" />
+            <!-- Main Yellow Taxiway Guideline -->
+            <line x1="500" y1="50" x2="500" y2="1000" stroke="#fbbf24" stroke-width="6" />
+            <!-- Parking Node Circle inside hangar -->
+            <circle cx="500" cy="300" r="12" fill="none" stroke="#fbbf24" stroke-width="4" />
+            <circle cx="500" cy="300" r="3" fill="#fbbf24" />
 
-            <!-- Open Sliding Hangar Doors -->
-            <rect x="20" y="230" width="120" height="240" fill="#cbd5e1" stroke="#475569" stroke-width="4" />
-            <rect x="40" y="250" width="35" height="200" fill="#94a3b8" />
-            <rect x="85" y="250" width="35" height="200" fill="#94a3b8" />
+            <!-- HANGAR INTERIOR FLOOR -->
+            <!-- Main internal concrete pad -->
+            <rect x="100" y="50" width="800" height="500" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" />
             
-            <rect x="860" y="230" width="120" height="240" fill="#cbd5e1" stroke="#475569" stroke-width="4" />
-            <rect x="880" y="250" width="35" height="200" fill="#94a3b8" />
-            <rect x="925" y="250" width="35" height="200" fill="#94a3b8" />
-
-            <!-- Hangar Warning Stripes -->
-            <g stroke="#f59e0b" stroke-width="8">
-                <line x1="140" y1="470" x2="160" y2="470" />
-                <line x1="200" y1="470" x2="220" y2="470" />
-                <line x1="780" y1="470" x2="800" y2="470" />
-                <line x1="840" y1="470" x2="860" y2="470" />
+            <!-- Safety Grid Work Zones (Side storage / maintenance areas) -->
+            <rect x="120" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+            <rect x="760" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+            
+            <!-- Hangar Floor Safety Boundary Hatching -->
+            <g stroke="#f59e0b" stroke-width="4">
+                <!-- Left door threshold hazard line -->
+                <line x1="100" y1="550" x2="350" y2="550" stroke-dasharray="10,8" />
+                <!-- Right door threshold hazard line -->
+                <line x1="650" y1="550" x2="900" y2="550" stroke-dasharray="10,8" />
             </g>
+
+            <!-- WALLS AND STRUCTURAL ELEMENTS (Top-Down Profile) -->
+            <!-- Back Solid Wall -->
+            <rect x="90" y="40" width="820" height="15" fill="#1e293b" />
+            <!-- Left Side Wall -->
+            <rect x="90" y="40" width="15" height="515" fill="#1e293b" />
+            <!-- Right Side Wall -->
+            <rect x="895" y="40" width="15" height="515" fill="#1e293b" />
+            
+            <!-- Structural Pillars (Dark squares along the walls) -->
+            <g fill="#0f172a">
+                <rect x="85" y="35" width="25" height="25" />
+                <rect x="890" y="35" width="25" height="25" />
+                <rect x="85" y="290" width="25" height="25" />
+                <rect x="890" y="290" width="25" height="25" />
+                <rect x="85" y="540" width="25" height="25" />
+                <rect x="890" y="540" width="25" height="25" />
+            </g>
+
+            <!-- SLIDING HANGAR DOORS (Partially open top-down profiles) -->
+            <!-- Door Tracks -->
+            <rect x="100" y="552" width="800" height="6" fill="#334155" />
+            
+            <!-- Left sliding door leaf -->
+            <rect x="105" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
+            <!-- Right sliding door leaf -->
+            <rect x="635" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
         </svg>
     </div>
 
@@ -140,15 +152,14 @@
     <div id="airplane" class="airplane">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
             <!-- Long High-Aspect Slender Wings -->
-            <!-- Wing Base & Dihedral Profile Ends -->
             <path d="M50,42 L5,45 L5,49 L50,51 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.7"/>
             <path d="M50,42 L95,45 L95,49 L50,51 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.7"/>
+            
             <!-- Wing Trim Lines (DA40 Red Trim Accents) -->
             <path d="M12,45.5 L5,46 L5,48 L12,47.5 Z" fill="#ef4444" />
             <path d="M88,45.5 L95,46 L95,48 L88,47.5 Z" fill="#ef4444" />
             
             <!-- Long Narrow Fuselage Main Body -->
-            <!-- From Nose (Y:10) to Tail (Y:90) -->
             <path d="M46,16 C46,10 54,10 54,16 L53,40 C53,45 52,65 51.5,86 L48.5,86 C48,65 47,45 47,40 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.5" />
 
             <!-- Iconic DA40 T-Tail Horizontal Stabilizer -->
@@ -159,6 +170,7 @@
 
             <!-- Forward Bubble Canopy (Glass Cockpit View) -->
             <path d="M47,24 Q50,20 53,24 Q53.5,35 52.5,41 L47.5,41 Q46.5,35 47,24 Z" fill="#38bdf8" fill-opacity="0.7" stroke="#0284c7" stroke-width="0.7" />
+            
             <!-- Inner Seats / Dashboard Silhouette -->
             <rect x="48" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
             <rect x="50.5" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
@@ -167,18 +179,14 @@
 
             <!-- Nose Spinner & Propeller (Animated Layer) -->
             <g class="propeller">
-                <!-- Translucent Prop Blur Circle -->
                 <circle cx="50" cy="10" r="14" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2" />
-                <!-- Individual Blades -->
                 <line x1="50" y1="10" x2="50" y2="-3" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
                 <line x1="50" y1="10" x2="38" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
                 <line x1="50" y1="10" x2="62" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
-                <!-- Blade Yellow Safety Tips -->
                 <circle cx="50" cy="-2" r="0.7" fill="#eab308" />
                 <circle cx="39" cy="16.5" r="0.7" fill="#eab308" />
                 <circle cx="61" cy="16.5" r="0.7" fill="#eab308" />
             </g>
-            <!-- Solid Center Nose Cone Spinner -->
             <circle cx="50" cy="10" r="2.5" fill="#ef4444" />
         </svg>
     </div>
@@ -226,10 +234,3 @@
             isDragging = false;
         }
 
-        // Desktop Mouse Bindings
-        airplane.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDrag);
-
-        // Mobile Touch Bindings
-        airplane.addEventListener('touchstart', startDrag);
