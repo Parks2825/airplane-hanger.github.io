@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airplane Hangar Interactive</title>
+    <title>Diamond DA40 Hangar Interactive</title>
     <style>
         * {
             box-sizing: border-box;
@@ -54,10 +54,10 @@
             height: auto;
         }
 
-        /* Moveable Airplane Styles */
+        /* Moveable Diamond DA40 Styles */
         .airplane {
             position: absolute;
-            width: 140px;
+            width: 180px; /* Slightly wider to accommodate long DA40 wingspan */
             height: auto;
             cursor: move;
             cursor: grab;
@@ -66,18 +66,28 @@
             filter: drop-shadow(5px 12px 8px rgba(0, 0, 0, 0.25));
             z-index: 5;
             left: 50%;
-            top: 35%;
+            top: 30%;
             transform: translateX(-50%);
         }
 
         .airplane:active {
             cursor: grabbing;
         }
+
+        /* Propeller Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .propeller {
+            transform-origin: 50px 10px;
+            animation: spin 0.15s linear infinite;
+        }
     </style>
 </head>
 <body>
 
-    <div class="instructions">🛩️ Drag the airplane into or out of the architectural hangar!</div>
+    <div class="instructions">🛩️ Drag the Diamond DA40 around the architectural hangar!</div>
 
     <div class="environment">
         <!-- SVG Airplane Hangar Art -->
@@ -94,37 +104,29 @@
             <line x1="750" y1="470" x2="900" y2="600" stroke="#cbd5e1" stroke-width="4" />
 
             <!-- MAIN HANGAR STRUCTURE -->
-            <!-- Back interior wall (Darker depth) -->
             <polygon points="150,470 150,220 500,130 850,220 850,470" fill="#475569" />
-            <!-- Interior Support Beams -->
             <line x1="300" y1="470" x2="300" y2="180" stroke="#334155" stroke-width="4" />
             <line x1="700" y1="470" x2="700" y2="180" stroke="#334155" stroke-width="4" />
 
             <!-- Main Building Outer Frame -->
-            <!-- Left Wall Outer -->
             <rect x="100" y="210" width="50" height="260" fill="#64748b" />
-            <!-- Right Wall Outer -->
             <rect x="850" y="210" width="50" height="260" fill="#64748b" />
             
             <!-- Arched Roof Structure -->
             <polygon points="80,210 500,100 920,210 870,230 500,125 130,230" fill="#475569" />
             <polygon points="100,210 500,110 900,210 500,120" fill="#94a3b8" />
-            
-            <!-- Roof Trim/Accent -->
             <polygon points="80,210 500,100 920,210 920,195 500,85 80,195" fill="#ef4444" />
 
             <!-- Open Sliding Hangar Doors -->
-            <!-- Left Open Door -->
             <rect x="20" y="230" width="120" height="240" fill="#cbd5e1" stroke="#475569" stroke-width="4" />
             <rect x="40" y="250" width="35" height="200" fill="#94a3b8" />
             <rect x="85" y="250" width="35" height="200" fill="#94a3b8" />
             
-            <!-- Right Open Door -->
             <rect x="860" y="230" width="120" height="240" fill="#cbd5e1" stroke="#475569" stroke-width="4" />
             <rect x="880" y="250" width="35" height="200" fill="#94a3b8" />
             <rect x="925" y="250" width="35" height="200" fill="#94a3b8" />
 
-            <!-- Hangar Warning Stripes on Floor Edge -->
+            <!-- Hangar Warning Stripes -->
             <g stroke="#f59e0b" stroke-width="8">
                 <line x1="140" y1="470" x2="160" y2="470" />
                 <line x1="200" y1="470" x2="220" y2="470" />
@@ -134,27 +136,50 @@
         </svg>
     </div>
 
-    <!-- Moveable SVG Airplane -->
+    <!-- Moveable Diamond DA40 Top-Down View -->
     <div id="airplane" class="airplane">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-            <!-- Tail Fin -->
-            <path d="M20,50 L5,20 L22,25 Z" fill="#ef4444" />
-            <path d="M5,20 L2,20 L5,25 Z" fill="#b91c1c" />
-            <!-- Main Fuselage Body -->
-            <path d="M10,50 Q45,32 85,45 Q95,50 85,55 Q45,68 10,50 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
-            <!-- Jet Engine Nose Cone -->
-            <path d="M80,44 Q88,50 80,56 Z" fill="#334155" />
-            <!-- Rear Jet Exhaust -->
-            <rect x="7" y="47" width="4" height="6" fill="#1e293b" />
-            <!-- Big Wings (Top Perspective) -->
-            <path d="M42,48 L25,10 L42,10 L65,48 Z" fill="#3b82f6" />
-            <path d="M42,52 L25,90 L42,90 L65,52 Z" fill="#1d4ed8" />
-            <!-- Cabin Windows -->
-            <circle cx="52" cy="47" r="1.5" fill="#38bdf8" />
-            <circle cx="60" cy="48" r="1.5" fill="#38bdf8" />
-            <circle cx="68" cy="49" r="1.5" fill="#38bdf8" />
-            <circle cx="74" cy="50" r="1.5" fill="#38bdf8" />
-        </g>
+            <!-- Long High-Aspect Slender Wings -->
+            <!-- Wing Base & Dihedral Profile Ends -->
+            <path d="M50,42 L5,45 L5,49 L50,51 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.7"/>
+            <path d="M50,42 L95,45 L95,49 L50,51 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.7"/>
+            <!-- Wing Trim Lines (DA40 Red Trim Accents) -->
+            <path d="M12,45.5 L5,46 L5,48 L12,47.5 Z" fill="#ef4444" />
+            <path d="M88,45.5 L95,46 L95,48 L88,47.5 Z" fill="#ef4444" />
+            
+            <!-- Long Narrow Fuselage Main Body -->
+            <!-- From Nose (Y:10) to Tail (Y:90) -->
+            <path d="M46,16 C46,10 54,10 54,16 L53,40 C53,45 52,65 51.5,86 L48.5,86 C48,65 47,45 47,40 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.5" />
+
+            <!-- Iconic DA40 T-Tail Horizontal Stabilizer -->
+            <path d="M51.5,85 L52,89 L57,91 L57,93 L43,93 L43,91 L48,89 L48.5,85 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.5" />
+            <!-- Tailplane Red Accent Tips -->
+            <rect x="43" y="91" width="2" height="2" fill="#ef4444" />
+            <rect x="55" y="45.5" width="2" height="2" fill="#ef4444" />
+
+            <!-- Forward Bubble Canopy (Glass Cockpit View) -->
+            <path d="M47,24 Q50,20 53,24 Q53.5,35 52.5,41 L47.5,41 Q46.5,35 47,24 Z" fill="#38bdf8" fill-opacity="0.7" stroke="#0284c7" stroke-width="0.7" />
+            <!-- Inner Seats / Dashboard Silhouette -->
+            <rect x="48" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
+            <rect x="50.5" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
+            <rect x="48" y="32" width="1.5" height="3" rx="0.5" fill="#334155" />
+            <rect x="50.5" y="32" width="1.5" height="3" rx="0.5" fill="#334155" />
+
+            <!-- Nose Spinner & Propeller (Animated Layer) -->
+            <g class="propeller">
+                <!-- Translucent Prop Blur Circle -->
+                <circle cx="50" cy="10" r="14" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2" />
+                <!-- Individual Blades -->
+                <line x1="50" y1="10" x2="50" y2="-3" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="50" y1="10" x2="38" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="50" y1="10" x2="62" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- Blade Yellow Safety Tips -->
+                <circle cx="50" cy="-2" r="0.7" fill="#eab308" />
+                <circle cx="39" cy="16.5" r="0.7" fill="#eab308" />
+                <circle cx="61" cy="16.5" r="0.7" fill="#eab308" />
+            </g>
+            <!-- Solid Center Nose Cone Spinner -->
+            <circle cx="50" cy="10" r="2.5" fill="#ef4444" />
         </svg>
     </div>
 
@@ -166,8 +191,8 @@
         // Start Drag (Mouse & Touch)
         function startDrag(e) {
             isDragging = true;
-            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            const clientX = e.type === 'touchstart' ? e.touches.clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches.clientY : e.clientY;
             
             const rect = airplane.getBoundingClientRect();
             offsetX = clientX - rect.left;
@@ -177,17 +202,14 @@
         // Drag Action
         function drag(e) {
             if (!isDragging) return;
-            
-            // Prevent mobile screen pull-down scrolling
             if (e.type === 'touchmove') e.preventDefault();
 
-            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+            const clientX = e.type === 'touchmove' ? e.touches.clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches.clientY : e.clientY;
 
             let newX = clientX - offsetX;
             let newY = clientY - offsetY;
 
-            // Constrain airplane inside browser viewport boundaries
             const maxW = window.innerWidth - airplane.offsetWidth;
             const maxH = window.innerHeight - airplane.offsetHeight;
             
@@ -196,7 +218,7 @@
 
             airplane.style.left = `${newX}px`;
             airplane.style.top = `${newY}px`;
-            airplane.style.transform = 'none'; // Clear initial centering transform rule
+            airplane.style.transform = 'none';
         }
 
         // Stop Drag
@@ -211,8 +233,3 @@
 
         // Mobile Touch Bindings
         airplane.addEventListener('touchstart', startDrag);
-        document.addEventListener('touchmove', drag, { passive: false });
-        document.addEventListener('touchend', stopDrag);
-    </script>
-</body>
-</html>
