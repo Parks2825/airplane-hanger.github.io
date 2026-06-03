@@ -14,7 +14,7 @@
         body {
             width: 100vw;
             height: 100vh;
-            background: #475569; /* Dark asphalt surrounding tarmac */
+            background: #475569;
             overflow: hidden;
             font-family: system-ui, sans-serif;
             position: relative;
@@ -63,38 +63,27 @@
             cursor: grab;
             user-select: none;
             touch-action: none;
-            /* Casts a realistic drop shadow directly onto the floor */
             filter: drop-shadow(8px 15px 6px rgba(0, 0, 0, 0.35));
             z-index: 5;
-            left: 50%;
-            top: 60%;
-            transform: translateX(-50%);
+            /* Updated placement rules to prevent drag locking conflicts */
+            left: calc(50% - 90px);
+            top: 55%;
         }
 
         .airplane:active {
             cursor: grabbing;
         }
-
-        /* Propeller Animation */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .propeller {
-            transform-origin: 50px 10px;
-            animation: spin 0.15s linear infinite;
-        }
     </style>
 </head>
 <body>
 
-    <div class="instructions">🛩️ Park or taxi the Diamond DA40 within the top-down hangar layout!</div>
+    <div class="instructions">🛩️ Drag the Diamond DA40 around the top-down hangar layout!</div>
 
     <div class="hangar-layout">
         <!-- SVG Top-Down Hangar Layout -->
         <svg class="hangar-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://w3.org">
             
-            <!-- Concrete Apron/Tarmac Area (Outside the hangar at the bottom) -->
+            <!-- Concrete Apron/Tarmac Area -->
             <rect x="0" y="550" width="1000" height="450" fill="#64748b" />
             
             <!-- Main Yellow Taxiway Guideline -->
@@ -104,30 +93,24 @@
             <circle cx="500" cy="300" r="3" fill="#fbbf24" />
 
             <!-- HANGAR INTERIOR FLOOR -->
-            <!-- Main internal concrete pad -->
             <rect x="100" y="50" width="800" height="500" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" />
             
-            <!-- Safety Grid Work Zones (Side storage / maintenance areas) -->
+            <!-- Safety Grid Work Zones -->
             <rect x="120" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
             <rect x="760" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
             
             <!-- Hangar Floor Safety Boundary Hatching -->
             <g stroke="#f59e0b" stroke-width="4">
-                <!-- Left door threshold hazard line -->
                 <line x1="100" y1="550" x2="350" y2="550" stroke-dasharray="10,8" />
-                <!-- Right door threshold hazard line -->
                 <line x1="650" y1="550" x2="900" y2="550" stroke-dasharray="10,8" />
             </g>
 
             <!-- WALLS AND STRUCTURAL ELEMENTS (Top-Down Profile) -->
-            <!-- Back Solid Wall -->
             <rect x="90" y="40" width="820" height="15" fill="#1e293b" />
-            <!-- Left Side Wall -->
             <rect x="90" y="40" width="15" height="515" fill="#1e293b" />
-            <!-- Right Side Wall -->
             <rect x="895" y="40" width="15" height="515" fill="#1e293b" />
             
-            <!-- Structural Pillars (Dark squares along the walls) -->
+            <!-- Structural Pillars -->
             <g fill="#0f172a">
                 <rect x="85" y="35" width="25" height="25" />
                 <rect x="890" y="35" width="25" height="25" />
@@ -137,13 +120,9 @@
                 <rect x="890" y="540" width="25" height="25" />
             </g>
 
-            <!-- SLIDING HANGAR DOORS (Partially open top-down profiles) -->
-            <!-- Door Tracks -->
+            <!-- SLIDING HANGAR DOORS -->
             <rect x="100" y="552" width="800" height="6" fill="#334155" />
-            
-            <!-- Left sliding door leaf -->
             <rect x="105" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
-            <!-- Right sliding door leaf -->
             <rect x="635" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
         </svg>
     </div>
@@ -151,42 +130,40 @@
     <!-- Moveable Diamond DA40 Top-Down View -->
     <div id="airplane" class="airplane">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://w3.org">
-            <!-- Long High-Aspect Slender Wings -->
+            <!-- Long Slender Wings -->
             <path d="M50,42 L5,45 L5,49 L50,51 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.7"/>
             <path d="M50,42 L95,45 L95,49 L50,51 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.7"/>
             
-            <!-- Wing Trim Lines (DA40 Red Trim Accents) -->
+            <!-- Wing Trim Lines -->
             <path d="M12,45.5 L5,46 L5,48 L12,47.5 Z" fill="#ef4444" />
             <path d="M88,45.5 L95,46 L95,48 L88,47.5 Z" fill="#ef4444" />
             
-            <!-- Long Narrow Fuselage Main Body -->
+            <!-- Long Narrow Fuselage Body -->
             <path d="M46,16 C46,10 54,10 54,16 L53,40 C53,45 52,65 51.5,86 L48.5,86 C48,65 47,45 47,40 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.5" />
 
-            <!-- Iconic DA40 T-Tail Horizontal Stabilizer -->
+            <!-- DA40 T-Tail Horizontal Stabilizer -->
             <path d="M51.5,85 L52,89 L57,91 L57,93 L43,93 L43,91 L48,89 L48.5,85 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.5" />
-            <!-- Tailplane Red Accent Tips -->
             <rect x="43" y="91" width="2" height="2" fill="#ef4444" />
             <rect x="55" y="45.5" width="2" height="2" fill="#ef4444" />
 
-            <!-- Forward Bubble Canopy (Glass Cockpit View) -->
+            <!-- Forward Bubble Canopy Glass -->
             <path d="M47,24 Q50,20 53,24 Q53.5,35 52.5,41 L47.5,41 Q46.5,35 47,24 Z" fill="#38bdf8" fill-opacity="0.7" stroke="#0284c7" stroke-width="0.7" />
             
-            <!-- Inner Seats / Dashboard Silhouette -->
+            <!-- Inner Seats Silhouette -->
             <rect x="48" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
             <rect x="50.5" y="27" width="1.5" height="3" rx="0.5" fill="#1e293b" />
             <rect x="48" y="32" width="1.5" height="3" rx="0.5" fill="#334155" />
             <rect x="50.5" y="32" width="1.5" height="3" rx="0.5" fill="#334155" />
 
-            <!-- Nose Spinner & Propeller (Animated Layer) -->
-            <g class="propeller">
-                <circle cx="50" cy="10" r="14" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2" />
-                <line x1="50" y1="10" x2="50" y2="-3" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
-                <line x1="50" y1="10" x2="38" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
-                <line x1="50" y1="10" x2="62" y2="17" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
-                <circle cx="50" cy="-2" r="0.7" fill="#eab308" />
-                <circle cx="39" cy="16.5" r="0.7" fill="#eab308" />
-                <circle cx="61" cy="16.5" r="0.7" fill="#eab308" />
+            <!-- Static Nose Propeller Elements (No spinning animation class) -->
+            <g>
+                <line x1="50" y1="10" x2="36" y2="10" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="50" y1="10" x2="64" y2="10" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round" />
+                <!-- Blade Yellow Safety Tips -->
+                <circle cx="36.5" cy="10" r="0.7" fill="#eab308" />
+                <circle cx="63.5" cy="10" r="0.7" fill="#eab308" />
             </g>
+            <!-- Center Nose Cone Spinner -->
             <circle cx="50" cy="10" r="2.5" fill="#ef4444" />
         </svg>
     </div>
@@ -196,24 +173,23 @@
         let isDragging = false;
         let offsetX, offsetY;
 
-        // Start Drag (Mouse & Touch)
         function startDrag(e) {
             isDragging = true;
-            const clientX = e.type === 'touchstart' ? e.touches.clientX : e.clientX;
-            const clientY = e.type === 'touchstart' ? e.touches.clientY : e.clientY;
+            
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
             
             const rect = airplane.getBoundingClientRect();
             offsetX = clientX - rect.left;
             offsetY = clientY - rect.top;
         }
 
-        // Drag Action
         function drag(e) {
             if (!isDragging) return;
             if (e.type === 'touchmove') e.preventDefault();
 
-            const clientX = e.type === 'touchmove' ? e.touches.clientX : e.clientX;
-            const clientY = e.type === 'touchmove' ? e.touches.clientY : e.clientY;
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
 
             let newX = clientX - offsetX;
             let newY = clientY - offsetY;
@@ -226,11 +202,21 @@
 
             airplane.style.left = `${newX}px`;
             airplane.style.top = `${newY}px`;
-            airplane.style.transform = 'none';
         }
 
-        // Stop Drag
         function stopDrag() {
             isDragging = false;
         }
 
+        // Desktop Mouse Listeners
+        airplane.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+
+        // Mobile Touch Listeners 
+        airplane.addEventListener('touchstart', startDrag);
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+    </script>
+</body>
+</html>
