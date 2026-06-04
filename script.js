@@ -1,74 +1,108 @@
-const airplane = document.getElementById('airplane');
 const hangar = document.getElementById('hangar-frame');
-const planeLabel = document.getElementById('plane-label');
+const planes = [
+    {
+        el: document.getElementById('airplane1'),
+        label: document.querySelector('#airplane1 .plane-text-block'),
+        x: 300,
+        y: 280,
+        angle: 0,
+        id: 'DA40-1'
+    },
+    {
+        el: document.getElementById('airplane2'),
+        label: document.querySelector('#airplane2 .plane-text-block'),
+        x: 650,
+        y: 320,
+        angle: 90,
+        id: 'DA40-2'
+    }
+];
 
+let selectedPlane = planes[0];
 const rotDisplay = document.getElementById('telemetry-rot');
 const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
+const selectedDisplay = document.getElementById('selected-plane');
 
-let isDragging = false;
-let currentAngle = 0;
-let posX = 500;
-let posY = 280;
-
-// Parking spots: [centerX, centerY]
 const parkingSpots = [
-    {x: 280, y: 260},   // Spot 1
-    {x: 500, y: 260},   // Spot 2
-    {x: 720, y: 260},   // Spot 3
-    {x: 500, y: 440}    // Spot 4
+    {x: 240, y: 250},
+    {x: 440, y: 250},
+    {x: 680, y: 250},
+    {x: 500, y: 440}
 ];
 
 const snapThreshold = 85;
 
 function updateTelemetry() {
-    rotDisplay.textContent = Math.round(currentAngle) + '°';
-    xDisplay.textContent = Math.round(posX) + 'px';
-    yDisplay.textContent = Math.round(posY) + 'px';
+    selectedDisplay.textContent = selectedPlane.id;
+    rotDisplay.textContent = Math.round(selectedPlane.angle) + '°';
+    xDisplay.textContent = Math.round(selectedPlane.x) + 'px';
+    yDisplay.textContent = Math.round(selectedPlane.y) + 'px';
 }
 
-function updatePlane() {
-    airplane.style.left = (posX - 80) + 'px';   // offset for plane center
-    airplane.style.top = (posY - 65) + 'px';
-    airplane.style.setProperty('--plane-angle', currentAngle + 'deg');
-    updateTelemetry();
+function updatePlane(plane) {
+    plane.el.style.left = (plane.x - 80) + 'px';
+    plane.el.style.top = (plane.y - 65) + 'px';
+    plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-updatePlane();
+// Initialize planes
+planes.forEach(plane => {
+    plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
+    updatePlane(plane);
+    
+    // Click to select
+    plane.el.addEventListener('mousedown', (e) => {
+        if (e.detail === 1) { // single click
+            selectedPlane = plane;
+            planes.forEach(p => p.el.classList.remove('active'));
+            plane.el.classList.add('active');
+            updateTelemetry();
+        }
+    });
+});
 
-// Drag
-airplane.addEventListener('mousedown', () => {
-    isDragging = true;
-    airplane.style.transition = 'none';
+updateTelemetry();
+
+// Drag handling
+let isDragging = false;
+let currentDragPlane = null;
+
+document.addEventListener('mousedown', (e) => {
+    const planeEl = e.target.closest('.airplane-container');
+    if (planeEl) {
+        currentDragPlane = planes.find(p => p.el === planeEl);
+        isDragging = true;
+        currentDragPlane.el.style.transition = 'none';
+    }
 });
 
 document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || !currentDragPlane) return;
 
     const rect = hangar.getBoundingClientRect();
-    posX = e.clientX - rect.left;
-    posY = e.clientY - rect.top;
+    currentDragPlane.x = e.clientX - rect.left;
+    currentDragPlane.y = e.clientY - rect.top;
 
-    // Keep in bounds
-    posX = Math.max(80, Math.min(posX, rect.width - 80));
-    posY = Math.max(60, Math.min(posY, rect.height - 100));
+    currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
+    currentDragPlane.y = Math.max(60, Math.min(currentDragPlane.y, rect.height - 100));
 
-    updatePlane();
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
 document.addEventListener('mouseup', () => {
-    if (!isDragging) return;
+    if (!isDragging || !currentDragPlane) return;
     isDragging = false;
 
-    // Snap to nearest parking spot
+    // Snap logic
     let closest = null;
     let minDist = Infinity;
 
     for (let spot of parkingSpots) {
-        const dx = posX - spot.x;
-        const dy = posY - spot.y;
+        const dx = currentDragPlane.x - spot.x;
+        const dy = currentDragPlane.y - spot.y;
         const dist = Math.sqrt(dx*dx + dy*dy);
-
         if (dist < minDist) {
             minDist = dist;
             closest = spot;
@@ -76,20 +110,22 @@ document.addEventListener('mouseup', () => {
     }
 
     if (closest && minDist < snapThreshold) {
-        posX = closest.x;
-        posY = closest.y;
-        airplane.style.transition = 'all 0.35s ease-out';
+        currentDragPlane.x = closest.x;
+        currentDragPlane.y = closest.y;
+        currentDragPlane.el.style.transition = 'all 0.35s ease-out';
     } else {
-        airplane.style.transition = 'transform 0.1s';
+        currentDragPlane.el.style.transition = 'transform 0.1s';
     }
 
-    updatePlane();
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-// Rotation (unchanged)
+// Rotation (affects selected plane)
 function rotate(degrees) {
-    currentAngle = (currentAngle + degrees + 360) % 360;
-    updatePlane();
+    selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
+    updatePlane(selectedPlane);
+    updateTelemetry();
 }
 
 document.getElementById('rotate-left').addEventListener('click', () => rotate(-15));
