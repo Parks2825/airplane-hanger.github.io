@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diamond DA40 Silhouette Hangar</title>
+    <title>Diamond DA40 Interactive Hangar</title>
     <style>
         * {
             box-sizing: border-box;
@@ -14,10 +14,11 @@
         body {
             width: 100vw;
             height: 100vh;
-            background: #475569;
+            background: #1e293b; /* Darker asphalt background */
             overflow: hidden;
             font-family: system-ui, sans-serif;
             position: relative;
+            user-select: none;
         }
 
         /* Information Overlay */
@@ -26,15 +27,43 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: rgba(15, 23, 42, 0.9);
+            padding: 12px 24px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             pointer-events: none;
             text-align: center;
-            color: #0f172a;
+            color: #f8fafc;
             font-weight: 500;
-            z-index: 10;
+            z-index: 20;
+            border: 1px solid #334155;
+        }
+
+        /* Interface Control Buttons (For mobile or alternative click testing) */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 20;
+        }
+
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #2563eb;
         }
 
         /* Hangar Canvas Layout */
@@ -47,6 +76,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 1;
         }
 
         .hangar-svg {
@@ -54,51 +84,61 @@
             height: 100vh;
         }
 
-        /* Moveable & Rotatable Silhouette Plane Styles */
-        .airplane {
+        /* Moveable & Rotatable White Silhouette Plane Container */
+        .airplane-container {
             position: absolute;
-            width: 190px; /* Sized perfectly to preserve silhouette aspect ratio */
-            height: auto;
+            width: 200px;
+            height: 135px;
             cursor: move;
             cursor: grab;
-            user-select: none;
+            z-index: 10;
             touch-action: none;
-            /* Pronounced drop shadow to make the flat silhouette pop off the floor layout */
-            filter: drop-shadow(5px 12px 6px rgba(0, 0, 0, 0.4));
-            z-index: 5;
-            left: calc(50% - 95px);
-            top: 55%;
-            transform-origin: center center;
+            /* Casts a clean drop shadow based on the airplane shape */
+            filter: drop-shadow(10px 18px 8px rgba(0, 0, 0, 0.5));
         }
 
-        .airplane:active {
+        .airplane-container:active {
             cursor: grabbing;
+        }
+
+        /* Forces the SVG graphic content inside to register clicks perfectly */
+        .airplane-container svg {
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
         }
     </style>
 </head>
 <body>
 
-    <div class="instructions">🛩️ Drag to taxi. Press <b>A / D</b> or <b>Arrow Keys</b> to steer your silhouette plane!</div>
+    <div class="instructions">
+        🛩️ <b>Drag</b> to move. Press <b>A / D</b>, <b>Arrow Keys</b>, or use the buttons below to rotate!
+    </div>
+
+    <!-- UI Buttons for Manual Testing -->
+    <div class="controls">
+        <button class="btn" id="rotate-left">Rotate Left (A)</button>
+        <button class="btn" id="rotate-right">Rotate Right (D)</button>
+    </div>
 
     <div class="hangar-layout">
         <!-- SVG Top-Down Hangar Layout -->
         <svg class="hangar-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://w3.org">
-            
-            <!-- Concrete Apron/Tarmac Area -->
-            <rect x="0" y="550" width="1000" height="450" fill="#64748b" />
+            <!-- Concrete Apron Area -->
+            <rect x="0" y="550" width="1000" height="450" fill="#475569" />
             
             <!-- Main Yellow Taxiway Guideline -->
-            <line x1="500" y1="50" x2="500" y2="1000" stroke="#fbbf24" stroke-width="6" />
+            <line x1="500" y1="50" x2="500" y2="1000" stroke="#f59e0b" stroke-width="6" />
             <!-- Parking Node Circle inside hangar -->
-            <circle cx="500" cy="300" r="12" fill="none" stroke="#fbbf24" stroke-width="4" />
-            <circle cx="500" cy="300" r="3" fill="#fbbf24" />
+            <circle cx="500" cy="300" r="15" fill="none" stroke="#f59e0b" stroke-width="4" />
+            <circle cx="500" cy="300" r="4" fill="#f59e0b" />
 
             <!-- HANGAR INTERIOR FLOOR -->
-            <rect x="100" y="50" width="800" height="500" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" />
+            <rect x="100" y="50" width="800" height="500" fill="#94a3b8" stroke="#64748b" stroke-width="2" />
             
             <!-- Safety Grid Work Zones -->
-            <rect x="120" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
-            <rect x="760" y="80" width="120" height="440" fill="#94a3b8" fill-opacity="0.3" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+            <rect x="120" y="80" width="120" height="440" fill="#64748b" fill-opacity="0.2" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
+            <rect x="760" y="80" width="120" height="440" fill="#64748b" fill-opacity="0.2" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
             
             <!-- Hangar Floor Safety Boundary Hatching -->
             <g stroke="#f59e0b" stroke-width="4">
@@ -106,126 +146,95 @@
                 <line x1="650" y1="550" x2="900" y2="550" stroke-dasharray="10,8" />
             </g>
 
-            <!-- WALLS AND STRUCTURAL ELEMENTS (Top-Down Profile) -->
-            <rect x="90" y="40" width="820" height="15" fill="#1e293b" />
-            <rect x="90" y="40" width="15" height="515" fill="#1e293b" />
-            <rect x="895" y="40" width="15" height="515" fill="#1e293b" />
+            <!-- WALLS AND STRUCTURAL ELEMENTS -->
+            <rect x="90" y="40" width="820" height="15" fill="#0f172a" />
+            <rect x="90" y="40" width="15" height="515" fill="#0f172a" />
+            <rect x="895" y="40" width="15" height="515" fill="#0f172a" />
             
-            <!-- Structural Pillars -->
-            <g fill="#0f172a">
-                <rect x="85" y="35" width="25" height="25" />
-                <rect x="890" y="35" width="25" height="25" />
-                <rect x="85" y="290" width="25" height="25" />
-                <rect x="890" y="290" width="25" height="25" />
-                <rect x="85" y="540" width="25" height="25" />
-                <rect x="890" y="540" width="25" height="25" />
-            </g>
-
             <!-- SLIDING HANGAR DOORS -->
-            <rect x="100" y="552" width="800" height="6" fill="#334155" />
-            <rect x="105" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
-            <rect x="635" y="550" width="260" height="10" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="2" />
+            <rect x="100" y="552" width="800" height="6" fill="#0f172a" />
+            <rect x="105" y="550" width="260" height="10" rx="2" fill="#64748b" stroke="#334155" stroke-width="2" />
+            <rect x="635" y="550" width="260" height="10" rx="2" fill="#64748b" stroke="#334155" stroke-width="2" />
         </svg>
     </div>
 
-    <!-- Your Exact Uploaded Diamond DA40 Silhouette (Inline SVG) -->
-    <div id="airplane" class="airplane">
+    <!-- Fixed White Silhouette Interactive Component Container -->
+    <div id="airplane" class="airplane-container">
         <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org">
-            <!-- Main solid black silhouette shape -->
-            <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#000000" />
+            <!-- Main Silhouette Base Shape Swapped to solid White (#ffffff) -->
+            <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff" />
             
-            <!-- Propeller Assembly -->
-            <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#000000" />
-            <path d="M103,2 L97,2 L98,0 L102,0 Z" fill="#000000" />
+            <!-- Propeller Assembly Structure (White Silhouette) -->
+            <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#ffffff" />
+            <path d="M103,2 L97,2 L98,0 L102,0 Z" fill="#ffffff" />
 
-            <!-- White Cutout Detail Lines (Canopy/Flaps/Tail accents matching your image layout) -->
-            <!-- Cowling Accent -->
-            <path d="M96,14 L104,14" stroke="#ffffff" stroke-width="1" stroke-linecap="round" />
-            <!-- Front Canopy Windshield Ring -->
-            <path d="M94,22 C94,22 100,18 106,22 C106,22 107,31 100,32 C93,31 94,22 94,22 Z" fill="#ffffff" />
-            <!-- Rear Bubble Canopy Core Shape -->
-            <path d="M95,25 C95,25 100,21 105,25 C105,25 106,30 100,30 C94,30 95,25 95,25 Z" fill="#000000" />
-            <path d="M95,33 C95,30 105,30 105,33 C105,37 95,37 95,33 Z" fill="#ffffff" />
+            <!-- Dark slate line cutouts to show internal geometric details clearly -->
+            <!-- Cowling Accent line -->
+            <path d="M96,14 L104,14" stroke="#475569" stroke-width="1.2" stroke-linecap="round" />
+            <!-- Main Canopy Silhouette Ring -->
+            <path d="M94,22 C94,22 100,18 106,22 C106,22 107,31 100,32 C93,31 94,22 94,22 Z" fill="#475569" />
+            <!-- Interior Canopy Glass Core -->
+            <path d="M95,25 C95,25 100,21 105,25 C105,25 106,30 100,30 C94,30 95,25 95,25 Z" fill="#ffffff" />
+            <path d="M95,33 C95,30 105,30 105,33 C105,37 95,37 95,33 Z" fill="#475569" />
             
-            <!-- Wing Panel Seams / Structural Accents -->
-            <path d="M83,39 L83,50" stroke="#ffffff" stroke-width="1.2" />
-            <path d="M117,39 L117,50" stroke="#ffffff" stroke-width="1.2" />
-            <path d="M40,39.5 L40,49.5" stroke="#ffffff" stroke-width="0.8" />
-            <path d="M160,39.5 L160,49.5" stroke="#ffffff" stroke-width="0.8" />
-            <path d="M13,39.5 L20,39.5" stroke="#ffffff" stroke-width="0.8" />
-            <path d="M187,39.5 L180,39.5" stroke="#ffffff" stroke-width="0.8" />
-            <path d="M50,49 L76,49" stroke="#ffffff" stroke-width="0.8" />
-            <path d="M150,49 L124,49" stroke="#ffffff" stroke-width="0.8" />
+            <!-- Structural Wing Panel Lines -->
+            <path d="M83,39 L83,50" stroke="#475569" stroke-width="1.2" />
+            <path d="M117,39 L117,50" stroke="#475569" stroke-width="1.2" />
+            <path d="M40,39.5 L40,49.5" stroke="#475569" stroke-width="1" />
+            <path d="M160,39.5 L160,49.5" stroke="#475569" stroke-width="1" />
+            <path d="M13,39.5 L20,39.5" stroke="#475569" stroke-width="1" />
+            <path d="M187,39.5 L180,39.5" stroke="#475569" stroke-width="1" />
+            <path d="M50,49 L76,49" stroke="#475569" stroke-width="1" />
+            <path d="M150,49 L124,49" stroke="#475569" stroke-width="1" />
 
-            <!-- T-Tail Trim Panel -->
-            <path d="M72,97 L128,97" stroke="#ffffff" stroke-width="1.2" />
+            <!-- Tail Control Surfaces Panel Line -->
+            <path d="M72,97 L128,97" stroke="#475569" stroke-width="1.5" />
         </svg>
     </div>
 
     <script>
         const airplane = document.getElementById('airplane');
-        let isDragging = false;
-        let offsetX, offsetY;
+        const btnLeft = document.getElementById('rotate-left');
+        const btnRight = document.getElementById('rotate-right');
         
-        let currentRotation = 0; 
-        const rotationSpeed = 5;
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+        let currentRotation = 0;
+        const rotationSpeed = 15; // Increased speed to make turns crisp
 
-        function updateAirplaneTransform(x, y) {
-            airplane.style.left = `${x}px`;
-            airplane.style.top = `${y}px`;
+        // Explicit baseline placement variables to avoid undefined script state
+        let posX = window.innerWidth / 2 - 100;
+        let posY = window.innerHeight * 0.55;
+
+        // Force precise rendering state application
+        function updateTransform() {
+            airplane.style.left = `${posX}px`;
+            airplane.style.top = `${posY}px`;
             airplane.style.transform = `rotate(${currentRotation}deg)`;
         }
 
+        // Apply initial layout location safely on launch
+        updateTransform();
+
+        // Drag Initialization
         function startDrag(e) {
             isDragging = true;
-            const clientX = e.type === 'touchstart' ? e.touches.clientX : e.clientX;
-            const clientY = e.type === 'touchstart' ? e.touches.clientY : e.clientY;
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
             
-            const rect = airplane.getBoundingClientRect();
-            offsetX = clientX - rect.left;
-            offsetY = clientY - rect.top;
+            offsetX = clientX - posX;
+            offsetY = clientY - posY;
         }
 
+        // Active Track Movements
         function drag(e) {
             if (!isDragging) return;
             if (e.type === 'touchmove') e.preventDefault();
 
-            const clientX = e.type === 'touchmove' ? e.touches.clientX : e.clientX;
-            const clientY = e.type === 'touchmove' ? e.touches.clientY : e.clientY;
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
 
-            let newX = clientX - offsetX;
-            let newY = clientY - offsetY;
+            posX = clientX - offsetX;
+            posY = clientY - offsetY;
 
-            const maxW = window.innerWidth - airplane.offsetWidth;
-            const maxH = window.innerHeight - airplane.offsetHeight;
-            
-            newX = Math.max(0, Math.min(newX, maxW));
-            newY = Math.max(0, Math.min(newY, maxH));
-
-            updateAirplaneTransform(newX, newY);
-        }
-
-        function stopDrag() {
-            isDragging = false;
-        }
-
-        // Handle Keyboard Rotation Controls
-        window.addEventListener('keydown', (e) => {
-            const key = e.key.toLowerCase();
-            
-            if (key === 'a' || e.key === 'ArrowLeft') {
-                currentRotation -= rotationSpeed;
-            } else if (key === 'd' || e.key === 'ArrowRight') {
-                currentRotation += rotationSpeed;
-            } else {
-                return;
-            }
-
-            currentRotation = (currentRotation % 360 + 360) % 360;
-
-            const currentX = parseFloat(airplane.style.left) || (window.innerWidth / 2 - 95);
-            const currentY = parseFloat(airplane.style.top) || (window.innerHeight * 0.55);
-            updateAirplaneTransform(currentX, currentY);
-        });
-
-        // Desktop Mouse Bindings
+            // Viewport Boundary Constraints
