@@ -20,6 +20,7 @@
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color: #22c55e;">OPEN</span></div>
         <div>DIMENSIONS: <span class="telemetry-highlight">100' × 120'</span></div>
+        <div>PARKING SPOTS: <span class="telemetry-highlight">11</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>TAXIWAY ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
         <div>COORD X: <span id="telemetry-x" class="telemetry-highlight">500px</span></div>
@@ -38,26 +39,52 @@
         <button class="btn" id="rotate-right">Rotate Right (D)</button>
     </div>
 
-    <!-- Hangar Frame - 100' x 120' Aspect -->
+    <!-- Hangar Frame -->
     <div class="hangar-wrapper" id="hangar-frame">
 
-        <!-- Background SVG - Adjusted for new aspect ratio -->
         <svg class="hangar-svg" viewBox="0 0 1200 1000" fill="none" xmlns="http://w3.org/2000/svg">
             <rect x="0" y="0" width="1200" height="1000" fill="#334155" />
             <rect x="0" y="550" width="1200" height="450" fill="#475569" />
             <rect x="80" y="60" width="1040" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="5" rx="4" />
 
-            <!-- Parking Spots (adjusted positions) -->
-            <rect x="200" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
-            <text x="270" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">1</text>
-            <rect x="480" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
-            <text x="550" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">2</text>
-            <rect x="760" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
-            <text x="830" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">3</text>
-            <rect x="480" y="380" width="280" height="130" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
-            <text x="620" y="455" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">4</text>
+            <!-- 11 Parking Spots -->
+            <!-- Row 1 -->
+            <rect x="140" y="160" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="205" y="245" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">1</text>
+            
+            <rect x="300" y="160" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="365" y="245" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">2</text>
+            
+            <rect x="460" y="160" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="525" y="245" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">3</text>
+            
+            <rect x="620" y="160" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="685" y="245" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">4</text>
+            
+            <rect x="780" y="160" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="845" y="245" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">5</text>
 
-            <!-- Walls, Doors, etc. (scaled) -->
+            <!-- Row 2 -->
+            <rect x="200" y="340" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="265" y="425" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">6</text>
+            
+            <rect x="360" y="340" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="425" y="425" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">7</text>
+            
+            <rect x="520" y="340" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="585" y="425" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">8</text>
+            
+            <rect x="680" y="340" width="130" height="150" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="745" y="425" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">9</text>
+
+            <!-- Row 3 -->
+            <rect x="280" y="510" width="150" height="130" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="355" y="585" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">10</text>
+            
+            <rect x="620" y="510" width="150" height="130" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
+            <text x="695" y="585" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle">11</text>
+
+            <!-- Walls -->
             <rect x="70" y="50" width="1060" height="14" fill="#0f172a" />
             <rect x="70" y="50" width="14" height="510" fill="#0f172a" />
             <rect x="1116" y="50" width="14" height="510" fill="#0f172a" />

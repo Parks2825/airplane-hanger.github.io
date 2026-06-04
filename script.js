@@ -1,4 +1,5 @@
 const hangar = document.getElementById('hangar-frame');
+
 const planes = [
     {
         el: document.getElementById('airplane1'),
@@ -11,27 +12,36 @@ const planes = [
     {
         el: document.getElementById('airplane2'),
         visual: document.querySelector('#airplane2 .plane-visual'),
-        x: 650,
-        y: 320,
+        x: 750,
+        y: 420,
         angle: 45,
         id: 'DA40-2'
     }
 ];
 
 let selectedPlane = planes[0];
+
 const rotDisplay = document.getElementById('telemetry-rot');
 const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
+// 11 Parking Spots (centered coordinates)
 const parkingSpots = [
-    {x: 240, y: 250},
-    {x: 440, y: 250},
-    {x: 680, y: 250},
-    {x: 500, y: 440}
+    {x: 205, y: 235},  // 1
+    {x: 365, y: 235},  // 2
+    {x: 525, y: 235},  // 3
+    {x: 685, y: 235},  // 4
+    {x: 845, y: 235},  // 5
+    {x: 265, y: 415},  // 6
+    {x: 425, y: 415},  // 7
+    {x: 585, y: 415},  // 8
+    {x: 745, y: 415},  // 9
+    {x: 355, y: 575},  // 10
+    {x: 695, y: 575}   // 11
 ];
 
-const snapThreshold = 85;
+const snapThreshold = 90;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -46,12 +56,13 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize
+// Initialize planes
 planes.forEach(plane => {
     updatePlane(plane);
 
+    // Click to select
     plane.el.addEventListener('mousedown', (e) => {
-        if (e.detail === 1) {
+        if (e.detail === 1) {  // Single click
             selectedPlane = plane;
             planes.forEach(p => p.el.classList.remove('active'));
             plane.el.classList.add('active');
@@ -62,7 +73,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag & Snap logic (same as before)
+// Drag System
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -82,6 +93,7 @@ document.addEventListener('mousemove', (e) => {
     currentDragPlane.x = e.clientX - rect.left;
     currentDragPlane.y = e.clientY - rect.top;
 
+    // Keep inside bounds
     currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
     currentDragPlane.y = Math.max(60, Math.min(currentDragPlane.y, rect.height - 100));
 
@@ -93,13 +105,15 @@ document.addEventListener('mouseup', () => {
     if (!isDragging || !currentDragPlane) return;
     isDragging = false;
 
+    // Find nearest parking spot
     let closest = null;
     let minDist = Infinity;
 
     for (let spot of parkingSpots) {
         const dx = currentDragPlane.x - spot.x;
         const dy = currentDragPlane.y - spot.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
         if (dist < minDist) {
             minDist = dist;
             closest = spot;
