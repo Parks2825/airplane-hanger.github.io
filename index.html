@@ -10,11 +10,12 @@
 
     <!-- Instructions -->
     <div class="instructions">
-        🛩️ <strong>Drag</strong> any plane • <strong>A / D</strong> or Arrow Keys to rotate selected plane<br>
-        Click a plane to select it • Release near parking spot to snap
+        🛩️ <strong>Click</strong> a plane to select • <strong>Drag</strong> to move<br>
+        <strong>A / D</strong> or Arrow Keys to rotate selected plane<br>
+        Release near a spot to snap
     </div>
 
-    <!-- Telemetry Box -->
+    <!-- Telemetry -->
     <div class="hangar-telemetry-box">
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color: #22c55e;">OPEN</span></div>
@@ -24,7 +25,7 @@
         <div>COORD Y: <span id="telemetry-y" class="telemetry-highlight">400px</span></div>
     </div>
 
-    <!-- Hangar Label -->
+    <!-- Hangar Label (Outside / Above) -->
     <div class="hangar-label">
         FL9<br>
         <span class="hangar-subtitle">DIAMOND DA40 HANGAR</span>
@@ -39,12 +40,12 @@
     <!-- Hangar Frame -->
     <div class="hangar-wrapper" id="hangar-frame">
 
-        <!-- Hangar Background SVG -->
+        <!-- Background SVG -->
         <svg class="hangar-svg" viewBox="0 0 1000 1000" fill="none" xmlns="http://w3.org/2000/svg">
             <rect x="0" y="0" width="1000" height="1000" fill="#334155" />
             <rect x="0" y="550" width="1000" height="450" fill="#475569" />
             <rect x="100" y="60" width="800" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="4" rx="2" />
-            
+
             <!-- Parking Spots -->
             <rect x="180" y="170" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="240" y="250" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">1</text>
@@ -55,8 +56,11 @@
             <rect x="380" y="380" width="240" height="120" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="500" y="445" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">4</text>
 
+            <!-- Side Storage -->
             <rect x="120" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
             <rect x="750" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
+
+            <!-- Walls & Doors -->
             <rect x="90" y="50" width="820" height="12" fill="#0f172a" />
             <rect x="90" y="50" width="12" height="502" fill="#0f172a" />
             <rect x="898" y="50" width="12" height="502" fill="#0f172a" />
@@ -73,7 +77,7 @@
             <rect x="645" y="551" width="250" height="8" rx="2" fill="#64748b" stroke="#1e293b" stroke-width="1.5" />
         </svg>
 
-        <!-- First DA40 -->
+        <!-- Plane 1 -->
         <div id="airplane1" class="airplane-container active">
             <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
                 <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff" />
@@ -82,7 +86,7 @@
             <div class="plane-text-block">DA40-1 • N123DA</div>
         </div>
 
-        <!-- Second DA40 -->
+        <!-- Plane 2 -->
         <div id="airplane2" class="airplane-container">
             <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
                 <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc" />

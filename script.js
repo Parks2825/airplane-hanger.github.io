@@ -2,7 +2,6 @@ const hangar = document.getElementById('hangar-frame');
 const planes = [
     {
         el: document.getElementById('airplane1'),
-        label: document.querySelector('#airplane1 .plane-text-block'),
         x: 300,
         y: 280,
         angle: 0,
@@ -10,7 +9,6 @@ const planes = [
     },
     {
         el: document.getElementById('airplane2'),
-        label: document.querySelector('#airplane2 .plane-text-block'),
         x: 650,
         y: 320,
         angle: 90,
@@ -46,14 +44,13 @@ function updatePlane(plane) {
     plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize planes
+// Initialize
 planes.forEach(plane => {
     plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
     updatePlane(plane);
-    
-    // Click to select
+
     plane.el.addEventListener('mousedown', (e) => {
-        if (e.detail === 1) { // single click
+        if (e.detail === 1) {
             selectedPlane = plane;
             planes.forEach(p => p.el.classList.remove('active'));
             plane.el.classList.add('active');
@@ -64,7 +61,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag handling
+// Drag System
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -95,7 +92,6 @@ document.addEventListener('mouseup', () => {
     if (!isDragging || !currentDragPlane) return;
     isDragging = false;
 
-    // Snap logic
     let closest = null;
     let minDist = Infinity;
 
@@ -121,7 +117,7 @@ document.addEventListener('mouseup', () => {
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-// Rotation (affects selected plane)
+// Rotation
 function rotate(degrees) {
     selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
     updatePlane(selectedPlane);
