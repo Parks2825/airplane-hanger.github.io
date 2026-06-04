@@ -121,6 +121,7 @@ body {
 .btn:hover { background: #1d4ed8; }
 .btn:active { transform: scale(0.95); }
 
+/* Airplane Container */
 .airplane-container {
     position: absolute;
     width: 160px;
@@ -139,9 +140,12 @@ body {
     z-index: 20;
 }
 
+/* THIS WAS THE MISSING PART */
 .airplane-container svg {
     width: 140px;
     height: 95px;
+    transform: rotate(var(--plane-angle, 0deg));
+    transition: transform 0.1s;
 }
 
 .plane-text-block {

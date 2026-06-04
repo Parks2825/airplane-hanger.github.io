@@ -44,9 +44,8 @@ function updatePlane(plane) {
     plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize
+// Initialize planes
 planes.forEach(plane => {
-    plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
     updatePlane(plane);
 
     plane.el.addEventListener('mousedown', (e) => {
@@ -117,7 +116,7 @@ document.addEventListener('mouseup', () => {
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-// Rotation
+// Rotation (now properly works)
 function rotate(degrees) {
     selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
     updatePlane(selectedPlane);
