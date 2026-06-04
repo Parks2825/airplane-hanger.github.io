@@ -14,7 +14,7 @@
         body {
             width: 100vw;
             height: 100vh;
-            background: #1e293b; /* Darker asphalt background */
+            background: #1e293b;
             overflow: hidden;
             font-family: system-ui, sans-serif;
             position: relative;
@@ -27,7 +27,7 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             padding: 12px 24px;
             border-radius: 24px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -37,9 +37,11 @@
             font-weight: 500;
             z-index: 20;
             border: 1px solid #334155;
+            width: 90%;
+            max-width: 550px;
         }
 
-        /* Interface Control Buttons (For mobile or alternative click testing) */
+        /* Interface Control Buttons */
         .controls {
             position: absolute;
             bottom: 30px;
@@ -51,19 +53,23 @@
         }
 
         .btn {
-            background: #3b82f6;
+            background: #2563eb;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 12px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: background 0.15s, transform 0.1s;
         }
 
         .btn:hover {
-            background: #2563eb;
+            background: #1d4ed8;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
         }
 
         /* Hangar Canvas Layout */
@@ -93,15 +99,18 @@
             cursor: grab;
             z-index: 10;
             touch-action: none;
-            /* Casts a clean drop shadow based on the airplane shape */
+            /* Anchors placement properties cleanly to upper-left for transform matrix calculations */
+            left: 0;
+            top: 0;
             filter: drop-shadow(10px 18px 8px rgba(0, 0, 0, 0.5));
+            will-change: transform;
         }
 
         .airplane-container:active {
             cursor: grabbing;
         }
 
-        /* Forces the SVG graphic content inside to register clicks perfectly */
+        /* Essential block layer to ensure smooth tracking across layout elements */
         .airplane-container svg {
             width: 100%;
             height: 100%;
@@ -112,10 +121,10 @@
 <body>
 
     <div class="instructions">
-        🛩️ <b>Drag</b> to move. Press <b>A / D</b>, <b>Arrow Keys</b>, or use the buttons below to rotate!
+        🛩️ <b>Drag</b> to taxi. Press <b>A / D</b>, <b>Arrow Keys</b>, or click the buttons below to rotate!
     </div>
 
-    <!-- UI Buttons for Manual Testing -->
+    <!-- UI Buttons for Testing -->
     <div class="controls">
         <button class="btn" id="rotate-left">Rotate Left (A)</button>
         <button class="btn" id="rotate-right">Rotate Right (D)</button>
@@ -128,10 +137,10 @@
             <rect x="0" y="550" width="1000" height="450" fill="#475569" />
             
             <!-- Main Yellow Taxiway Guideline -->
-            <line x1="500" y1="50" x2="500" y2="1000" stroke="#f59e0b" stroke-width="6" />
+            <line x1="500" y1="50" x2="500" y2="1000" stroke="#fbbf24" stroke-width="7" />
             <!-- Parking Node Circle inside hangar -->
-            <circle cx="500" cy="300" r="15" fill="none" stroke="#f59e0b" stroke-width="4" />
-            <circle cx="500" cy="300" r="4" fill="#f59e0b" />
+            <circle cx="500" cy="300" r="16" fill="none" stroke="#fbbf24" stroke-width="4" />
+            <circle cx="500" cy="300" r="5" fill="#fbbf24" />
 
             <!-- HANGAR INTERIOR FLOOR -->
             <rect x="100" y="50" width="800" height="500" fill="#94a3b8" stroke="#64748b" stroke-width="2" />
@@ -141,7 +150,7 @@
             <rect x="760" y="80" width="120" height="440" fill="#64748b" fill-opacity="0.2" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4" />
             
             <!-- Hangar Floor Safety Boundary Hatching -->
-            <g stroke="#f59e0b" stroke-width="4">
+            <g stroke="#fbbf24" stroke-width="4">
                 <line x1="100" y1="550" x2="350" y2="550" stroke-dasharray="10,8" />
                 <line x1="650" y1="550" x2="900" y2="550" stroke-dasharray="10,8" />
             </g>
@@ -158,22 +167,19 @@
         </svg>
     </div>
 
-    <!-- Fixed White Silhouette Interactive Component Container -->
+    <!-- White Silhouette Interactive Component Container -->
     <div id="airplane" class="airplane-container">
         <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org">
-            <!-- Main Silhouette Base Shape Swapped to solid White (#ffffff) -->
+            <!-- Main Silhouette Base Shape (White) -->
             <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff" />
             
-            <!-- Propeller Assembly Structure (White Silhouette) -->
+            <!-- Propeller Assembly Structure -->
             <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#ffffff" />
             <path d="M103,2 L97,2 L98,0 L102,0 Z" fill="#ffffff" />
 
-            <!-- Dark slate line cutouts to show internal geometric details clearly -->
-            <!-- Cowling Accent line -->
+            <!-- Dark slate geometric panel accents -->
             <path d="M96,14 L104,14" stroke="#475569" stroke-width="1.2" stroke-linecap="round" />
-            <!-- Main Canopy Silhouette Ring -->
             <path d="M94,22 C94,22 100,18 106,22 C106,22 107,31 100,32 C93,31 94,22 94,22 Z" fill="#475569" />
-            <!-- Interior Canopy Glass Core -->
             <path d="M95,25 C95,25 100,21 105,25 C105,25 106,30 100,30 C94,30 95,25 95,25 Z" fill="#ffffff" />
             <path d="M95,33 C95,30 105,30 105,33 C105,37 95,37 95,33 Z" fill="#475569" />
             
@@ -200,17 +206,15 @@
         let isDragging = false;
         let offsetX = 0, offsetY = 0;
         let currentRotation = 0;
-        const rotationSpeed = 15; // Increased speed to make turns crisp
+        const rotationSpeed = 15;
 
-        // Explicit baseline placement variables to avoid undefined script state
+        // Position coordinates initialized precisely to the center of the workspace screen layout
         let posX = window.innerWidth / 2 - 100;
-        let posY = window.innerHeight * 0.55;
+        let posY = window.innerHeight * 0.50;
 
-        // Force precise rendering state application
+        // Uses translate3d + rotate to offload positional calculation to GPU hardware acceleration
         function updateTransform() {
-            airplane.style.left = `${posX}px`;
-            airplane.style.top = `${posY}px`;
-            airplane.style.transform = `rotate(${currentRotation}deg)`;
+            airplane.style.transform = `translate3d(${posX}px, ${posY}px, 0px) rotate(${currentRotation}deg)`;
         }
 
         // Apply initial layout location safely on launch
@@ -219,8 +223,8 @@
         // Drag Initialization
         function startDrag(e) {
             isDragging = true;
-            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            const clientX = e.type === 'touchstart' ? e.touches.clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches.clientY : e.clientY;
             
             offsetX = clientX - posX;
             offsetY = clientY - posY;
@@ -231,10 +235,11 @@
             if (!isDragging) return;
             if (e.type === 'touchmove') e.preventDefault();
 
-            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+            const clientX = e.type === 'touchmove' ? e.touches.clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches.clientY : e.clientY;
 
             posX = clientX - offsetX;
             posY = clientY - offsetY;
 
             // Viewport Boundary Constraints
+            const maxW = window.innerWidth - airplane.offsetWidth;
