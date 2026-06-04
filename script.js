@@ -16,14 +16,14 @@ function updateTelemetry() {
     yDisplay.textContent = Math.round(posY) + 'px';
 }
 
-// Set initial position
+// Initial position
 airplane.style.left = posX + 'px';
 airplane.style.top = posY + 'px';
 airplane.style.transform = `rotate(${currentAngle}deg)`;
 updateTelemetry();
 
-// Mouse Drag
-airplane.addEventListener('mousedown', (e) => {
+// Drag functionality
+airplane.addEventListener('mousedown', () => {
     isDragging = true;
     airplane.style.transition = 'none';
 });
@@ -35,7 +35,6 @@ document.addEventListener('mousemove', (e) => {
     posX = e.clientX - rect.left - airplane.offsetWidth / 2;
     posY = e.clientY - rect.top - airplane.offsetHeight / 2;
 
-    // Keep inside bounds
     posX = Math.max(0, Math.min(posX, rect.width - airplane.offsetWidth));
     posY = Math.max(0, Math.min(posY, rect.height - airplane.offsetHeight));
 
