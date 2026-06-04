@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FL9 - Diamond DA40 Hangar</title>
+    <title>FL9 - Diamond DA40 Hangar (100' x 120')</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,6 +19,7 @@
     <div class="hangar-telemetry-box">
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color: #22c55e;">OPEN</span></div>
+        <div>DIMENSIONS: <span class="telemetry-highlight">100' × 120'</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>TAXIWAY ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
         <div>COORD X: <span id="telemetry-x" class="telemetry-highlight">500px</span></div>
@@ -28,7 +29,7 @@
     <!-- Hangar Label -->
     <div class="hangar-label">
         FL9<br>
-        <span class="hangar-subtitle">DIAMOND DA40 HANGAR</span>
+        <span class="hangar-subtitle">DIAMOND DA40 HANGAR • 100' × 120'</span>
     </div>
 
     <!-- Controls -->
@@ -37,41 +38,29 @@
         <button class="btn" id="rotate-right">Rotate Right (D)</button>
     </div>
 
-    <!-- Hangar Frame -->
+    <!-- Hangar Frame - 100' x 120' Aspect -->
     <div class="hangar-wrapper" id="hangar-frame">
 
-        <!-- Background SVG -->
-        <svg class="hangar-svg" viewBox="0 0 1000 1000" fill="none" xmlns="http://w3.org/2000/svg">
-            <rect x="0" y="0" width="1000" height="1000" fill="#334155" />
-            <rect x="0" y="550" width="1000" height="450" fill="#475569" />
-            <rect x="100" y="60" width="800" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="4" rx="2" />
+        <!-- Background SVG - Adjusted for new aspect ratio -->
+        <svg class="hangar-svg" viewBox="0 0 1200 1000" fill="none" xmlns="http://w3.org/2000/svg">
+            <rect x="0" y="0" width="1200" height="1000" fill="#334155" />
+            <rect x="0" y="550" width="1200" height="450" fill="#475569" />
+            <rect x="80" y="60" width="1040" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="5" rx="4" />
 
-            <!-- Parking Spots -->
-            <rect x="180" y="170" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
-            <text x="240" y="250" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">1</text>
-            <rect x="380" y="170" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
-            <text x="440" y="250" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">2</text>
-            <rect x="620" y="170" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
-            <text x="680" y="250" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">3</text>
-            <rect x="380" y="380" width="240" height="120" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
-            <text x="500" y="445" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">4</text>
+            <!-- Parking Spots (adjusted positions) -->
+            <rect x="200" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
+            <text x="270" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">1</text>
+            <rect x="480" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
+            <text x="550" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">2</text>
+            <rect x="760" y="170" width="140" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
+            <text x="830" y="255" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">3</text>
+            <rect x="480" y="380" width="280" height="130" rx="8" fill="none" stroke="#e2e8f0" stroke-width="7" stroke-dasharray="14,9"/>
+            <text x="620" y="455" fill="#e2e8f0" font-size="32" font-weight="700" text-anchor="middle">4</text>
 
-            <rect x="120" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
-            <rect x="750" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
-            <rect x="90" y="50" width="820" height="12" fill="#0f172a" />
-            <rect x="90" y="50" width="12" height="502" fill="#0f172a" />
-            <rect x="898" y="50" width="12" height="502" fill="#0f172a" />
-            <g fill="#020617">
-                <rect x="84" y="44" width="24" height="24" rx="2" />
-                <rect x="892" y="44" width="24" height="24" rx="2" />
-                <rect x="84" y="290" width="24" height="24" rx="2" />
-                <rect x="892" y="290" width="24" height="24" rx="2" />
-                <rect x="84" y="538" width="24" height="24" rx="2" />
-                <rect x="892" y="538" width="24" height="24" rx="2" />
-            </g>
-            <rect x="100" y="552" width="800" height="4" fill="#0f172a" />
-            <rect x="105" y="551" width="250" height="8" rx="2" fill="#64748b" stroke="#1e293b" stroke-width="1.5" />
-            <rect x="645" y="551" width="250" height="8" rx="2" fill="#64748b" stroke="#1e293b" stroke-width="1.5" />
+            <!-- Walls, Doors, etc. (scaled) -->
+            <rect x="70" y="50" width="1060" height="14" fill="#0f172a" />
+            <rect x="70" y="50" width="14" height="510" fill="#0f172a" />
+            <rect x="1116" y="50" width="14" height="510" fill="#0f172a" />
         </svg>
 
         <!-- Plane 1 -->
