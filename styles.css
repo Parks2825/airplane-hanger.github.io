@@ -29,10 +29,10 @@ body {
 
 .hangar-svg { width: 100%; height: 100%; pointer-events: none; }
 
-/* Hangar Label - Positioned ABOVE the hangar */
+/* Hangar Label - Positioned OUTSIDE / ABOVE the hangar */
 .hangar-label {
     position: absolute;
-    top: 12%;
+    top: 40px;           /* Moved higher, outside the hangar frame */
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(180deg, #1e2937, #0f172a);
