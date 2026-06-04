@@ -121,7 +121,7 @@ body {
 .btn:hover { background: #1d4ed8; }
 .btn:active { transform: scale(0.95); }
 
-/* Airplane Container */
+/* === AIRPLANE ROTATION FIX === */
 .airplane-container {
     position: absolute;
     width: 160px;
@@ -140,14 +140,13 @@ body {
     z-index: 20;
 }
 
-/* THIS WAS THE MISSING PART */
-.airplane-container svg {
-    width: 140px;
-    height: 95px;
+/* Rotate the entire plane container (except label) */
+.airplane-container {
     transform: rotate(var(--plane-angle, 0deg));
-    transition: transform 0.1s;
+    transition: transform 0.15s ease-out;
 }
 
+/* Keep label upright */
 .plane-text-block {
     background: #0f172a;
     color: #f8fafc;
@@ -159,4 +158,5 @@ body {
     margin-top: 4px;
     white-space: nowrap;
     pointer-events: none;
+    transform: rotate(0deg) !important;   /* Force upright */
 }

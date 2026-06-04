@@ -11,7 +11,7 @@ const planes = [
         el: document.getElementById('airplane2'),
         x: 650,
         y: 320,
-        angle: 90,
+        angle: 45,
         id: 'DA40-2'
     }
 ];
@@ -44,7 +44,7 @@ function updatePlane(plane) {
     plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize planes
+// Initialize
 planes.forEach(plane => {
     updatePlane(plane);
 
@@ -60,7 +60,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag System
+// Drag
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -109,14 +109,14 @@ document.addEventListener('mouseup', () => {
         currentDragPlane.y = closest.y;
         currentDragPlane.el.style.transition = 'all 0.35s ease-out';
     } else {
-        currentDragPlane.el.style.transition = 'transform 0.1s';
+        currentDragPlane.el.style.transition = 'transform 0.15s ease-out';
     }
 
     updatePlane(currentDragPlane);
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-// Rotation (now properly works)
+// Rotation
 function rotate(degrees) {
     selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
     updatePlane(selectedPlane);
