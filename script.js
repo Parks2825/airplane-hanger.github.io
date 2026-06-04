@@ -1,5 +1,6 @@
 const airplane = document.getElementById('airplane');
 const hangar = document.getElementById('hangar-frame');
+const planeLabel = document.getElementById('plane-label');
 
 const rotDisplay = document.getElementById('telemetry-rot');
 const xDisplay = document.getElementById('telemetry-x');
@@ -17,10 +18,14 @@ function updateTelemetry() {
 }
 
 // Initial position
-airplane.style.left = posX + 'px';
-airplane.style.top = posY + 'px';
-airplane.style.transform = `rotate(${currentAngle}deg)`;
-updateTelemetry();
+function updatePlane() {
+    airplane.style.left = posX + 'px';
+    airplane.style.top = posY + 'px';
+    airplane.style.setProperty('--plane-angle', currentAngle + 'deg');
+    updateTelemetry();
+}
+
+updatePlane();
 
 // Drag functionality
 airplane.addEventListener('mousedown', () => {
@@ -38,9 +43,7 @@ document.addEventListener('mousemove', (e) => {
     posX = Math.max(0, Math.min(posX, rect.width - airplane.offsetWidth));
     posY = Math.max(0, Math.min(posY, rect.height - airplane.offsetHeight));
 
-    airplane.style.left = posX + 'px';
-    airplane.style.top = posY + 'px';
-    updateTelemetry();
+    updatePlane();
 });
 
 document.addEventListener('mouseup', () => {
@@ -51,8 +54,7 @@ document.addEventListener('mouseup', () => {
 // Rotation
 function rotate(degrees) {
     currentAngle = (currentAngle + degrees + 360) % 360;
-    airplane.style.transform = `rotate(${currentAngle}deg)`;
-    updateTelemetry();
+    updatePlane();
 }
 
 document.getElementById('rotate-left').addEventListener('click', () => rotate(-15));

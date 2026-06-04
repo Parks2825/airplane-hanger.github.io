@@ -134,6 +134,11 @@ body {
 
 .airplane-container:active { cursor: grabbing; }
 
+/* Plane SVG rotates, but label does not */
+.airplane-container svg {
+    transform: rotate(var(--plane-angle, 0deg));
+}
+
 .plane-text-block {
     background: #0f172a;
     color: #f8fafc;
@@ -144,4 +149,6 @@ body {
     border: 1px solid #475569;
     margin-top: 4px;
     white-space: nowrap;
+    transform: rotate(0deg); /* Force upright */
+    pointer-events: none;
 }
