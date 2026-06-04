@@ -2,6 +2,7 @@ const hangar = document.getElementById('hangar-frame');
 const planes = [
     {
         el: document.getElementById('airplane1'),
+        visual: document.querySelector('#airplane1 .plane-visual'),
         x: 300,
         y: 280,
         angle: 0,
@@ -9,6 +10,7 @@ const planes = [
     },
     {
         el: document.getElementById('airplane2'),
+        visual: document.querySelector('#airplane2 .plane-visual'),
         x: 650,
         y: 320,
         angle: 45,
@@ -41,7 +43,7 @@ function updateTelemetry() {
 function updatePlane(plane) {
     plane.el.style.left = (plane.x - 80) + 'px';
     plane.el.style.top = (plane.y - 65) + 'px';
-    plane.el.style.setProperty('--plane-angle', plane.angle + 'deg');
+    plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
 // Initialize
@@ -60,7 +62,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag
+// Drag & Snap logic (same as before)
 let isDragging = false;
 let currentDragPlane = null;
 
