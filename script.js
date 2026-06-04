@@ -28,17 +28,17 @@ const selectedDisplay = document.getElementById('selected-plane');
 
 // 11 Parking Spots - Updated coordinates to match new layout
 const parkingSpots = [
-    {x: 210, y: 215},   // 1
-    {x: 350, y: 215},   // 2
-    {x: 490, y: 215},   // 3
-    {x: 630, y: 215},   // 4
-    {x: 770, y: 215},   // 5
-    {x: 255, y: 390},   // 6
-    {x: 415, y: 390},   // 7
-    {x: 575, y: 390},   // 8
-    {x: 735, y: 390},   // 9
-    {x: 320, y: 560},   // 10
-    {x: 700, y: 560}    // 11
+    {x: 210, y: 225},   // 1
+    {x: 350, y: 225},   // 2
+    {x: 490, y: 225},   // 3
+    {x: 630, y: 225},   // 4
+    {x: 770, y: 225},   // 5
+    {x: 255, y: 400},   // 6
+    {x: 415, y: 400},   // 7
+    {x: 575, y: 400},   // 8
+    {x: 735, y: 400},   // 9
+    {x: 317, y: 575},   // 10
+    {x: 677, y: 575}    // 11
 ];
 
 const snapThreshold = 90;
