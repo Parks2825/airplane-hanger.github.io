@@ -23,7 +23,7 @@
         <div>COORD Y: <span id="telemetry-y" class="telemetry-highlight">400px</span></div>
     </div>
 
-    <!-- Hangar Label (Above) -->
+    <!-- Hangar Label - MOVED OUTSIDE / ABOVE the hangar -->
     <div class="hangar-label">
         FL9<br>
         <span class="hangar-subtitle">DIAMOND DA40 HANGAR</span>
@@ -40,35 +40,22 @@
 
         <!-- Hangar Background SVG -->
         <svg class="hangar-svg" viewBox="0 0 1000 1000" fill="none" xmlns="http://w3.org/2000/svg">
-            <!-- Concrete Base -->
             <rect x="0" y="0" width="1000" height="1000" fill="#334155" />
             <rect x="0" y="550" width="1000" height="450" fill="#475569" />
-            
-            <!-- Main Floor -->
             <rect x="100" y="60" width="800" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="4" rx="2" />
-
+            
             <!-- Parking Spots -->
-            <!-- Spot 1 -->
             <rect x="220" y="180" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="280" y="260" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">1</text>
-            
-            <!-- Spot 2 -->
             <rect x="440" y="180" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="500" y="260" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">2</text>
-            
-            <!-- Spot 3 -->
             <rect x="660" y="180" width="120" height="160" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="720" y="260" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">3</text>
-            
-            <!-- Spot 4 (Lower) -->
             <rect x="380" y="380" width="240" height="120" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="12,8"/>
             <text x="500" y="445" fill="#e2e8f0" font-size="28" font-weight="700" text-anchor="middle" opacity="0.9">4</text>
 
-            <!-- Side Storage -->
             <rect x="120" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
             <rect x="750" y="80" width="130" height="450" fill="#64748b" fill-opacity="0.15" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="8,4" />
-
-            <!-- Walls & Doors (unchanged) -->
             <rect x="90" y="50" width="820" height="12" fill="#0f172a" />
             <rect x="90" y="50" width="12" height="502" fill="#0f172a" />
             <rect x="898" y="50" width="12" height="502" fill="#0f172a" />
