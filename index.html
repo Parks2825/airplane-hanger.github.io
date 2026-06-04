@@ -11,8 +11,7 @@
     <!-- Instructions -->
     <div class="instructions">
         🛩️ <strong>Click</strong> a plane to select • <strong>Drag</strong> to move<br>
-        <strong>A / D</strong> or Arrow Keys to rotate selected plane<br>
-        Release near a spot to snap
+        <strong>A / D</strong> or Arrow Keys to rotate • Use dropdown to assign spot
     </div>
 
     <!-- Telemetry -->
@@ -25,6 +24,24 @@
         <div>TAXIWAY ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
         <div>COORD X: <span id="telemetry-x" class="telemetry-highlight">500px</span></div>
         <div>COORD Y: <span id="telemetry-y" class="telemetry-highlight">400px</span></div>
+        
+        <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid #334155;">
+            <strong>ASSIGN SPOT:</strong><br>
+            <select id="spot-assign" style="margin-top: 6px; padding: 6px; width: 100%; background: #1e293b; color: #e2e8f0; border: 1px solid #64748b; border-radius: 6px;">
+                <option value="">Select Spot...</option>
+                <option value="0">Spot 1</option>
+                <option value="1">Spot 2</option>
+                <option value="2">Spot 3</option>
+                <option value="3">Spot 4</option>
+                <option value="4">Spot 5</option>
+                <option value="5">Spot 6</option>
+                <option value="6">Spot 7</option>
+                <option value="7">Spot 8</option>
+                <option value="8">Spot 9</option>
+                <option value="9">Spot 10</option>
+                <option value="10">Spot 11</option>
+            </select>
+        </div>
     </div>
 
     <!-- Hangar Label -->
@@ -47,98 +64,97 @@
             <rect x="0" y="550" width="1200" height="450" fill="#475569" />
             <rect x="80" y="60" width="1040" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="5" rx="4" />
 
-            <!-- 11 Detailed DA40 Parking Spots -->
-            <!-- Row 1 -->
+            <!-- 11 DA40 Parking Spots with Wing & Tail Details -->
             <g>
-                <rect x="145" y="125" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M160 185 L145 200 L160 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M235 185 L250 200 L235 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M197 280 L187 300 L207 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="197,125 187,145 207,145" fill="#e2e8f0"/>
-                <text x="197" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">1</text>
+                <rect x="155" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M170 195 L155 210 L170 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M245 195 L260 210 L245 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M207 280 L197 300 L217 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="207,135 197,155 217,155" fill="#e2e8f0"/>
+                <text x="207" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">1</text>
             </g>
             <g>
-                <rect x="280" y="125" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M295 185 L280 200 L295 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M370 185 L385 200 L370 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M332 280 L322 300 L342 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="332,125 322,145 342,145" fill="#e2e8f0"/>
-                <text x="332" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">2</text>
+                <rect x="290" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M305 195 L290 210 L305 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M380 195 L395 210 L380 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M342 280 L332 300 L352 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="342,135 332,155 352,155" fill="#e2e8f0"/>
+                <text x="342" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">2</text>
             </g>
             <g>
-                <rect x="415" y="125" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M430 185 L415 200 L430 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M505 185 L520 200 L505 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M467 280 L457 300 L477 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="467,125 457,145 477,145" fill="#e2e8f0"/>
-                <text x="467" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">3</text>
+                <rect x="425" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M440 195 L425 210 L440 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M515 195 L530 210 L515 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M477 280 L467 300 L487 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="477,135 467,155 487,155" fill="#e2e8f0"/>
+                <text x="477" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">3</text>
             </g>
             <g>
-                <rect x="550" y="125" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M565 185 L550 200 L565 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M640 185 L655 200 L640 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M602 280 L592 300 L612 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="602,125 592,145 612,145" fill="#e2e8f0"/>
-                <text x="602" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">4</text>
+                <rect x="560" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M575 195 L560 210 L575 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M650 195 L665 210 L650 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M612 280 L602 300 L622 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="612,135 602,155 622,155" fill="#e2e8f0"/>
+                <text x="612" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">4</text>
             </g>
             <g>
-                <rect x="685" y="125" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M700 185 L685 200 L700 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M775 185 L790 200 L775 215" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M737 280 L727 300 L747 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="737,125 727,145 747,145" fill="#e2e8f0"/>
-                <text x="737" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">5</text>
+                <rect x="695" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M710 195 L695 210 L710 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M785 195 L800 210 L785 225" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M747 280 L737 300 L757 300" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="747,135 737,155 757,155" fill="#e2e8f0"/>
+                <text x="747" y="260" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">5</text>
             </g>
 
             <!-- Row 2 -->
             <g>
-                <rect x="200" y="335" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M215 395 L200 410 L215 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M290 395 L305 410 L290 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M252 430 L242 450 L262 450" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="252,340 242,360 262,360" fill="#e2e8f0"/>
+                <rect x="200" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M215 400 L200 415 L215 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M290 400 L305 415 L290 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M252 435 L242 455 L262 455" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="252,345 242,365 262,365" fill="#e2e8f0"/>
                 <text x="252" y="470" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">6</text>
             </g>
             <g>
-                <rect x="340" y="335" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M355 395 L340 410 L355 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M430 395 L445 410 L430 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M392 430 L382 450 L402 450" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="392,340 382,360 402,360" fill="#e2e8f0"/>
+                <rect x="340" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M355 400 L340 415 L355 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M430 400 L445 415 L430 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M392 435 L382 455 L402 455" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="392,345 382,365 402,365" fill="#e2e8f0"/>
                 <text x="392" y="470" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">7</text>
             </g>
             <g>
-                <rect x="480" y="335" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M495 395 L480 410 L495 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M570 395 L585 410 L570 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M532 430 L522 450 L542 450" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="532,340 522,360 542,360" fill="#e2e8f0"/>
+                <rect x="480" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M495 400 L480 415 L495 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M570 400 L585 415 L570 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M532 435 L522 455 L542 455" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="532,345 522,365 542,365" fill="#e2e8f0"/>
                 <text x="532" y="470" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">8</text>
             </g>
             <g>
-                <rect x="620" y="335" width="105" height="205" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M635 395 L620 410 L635 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M710 395 L725 410 L710 425" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
-                <path d="M672 430 L662 450 L682 450" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="672,340 662,360 682,360" fill="#e2e8f0"/>
+                <rect x="620" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M635 400 L620 415 L635 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M710 400 L725 415 L710 430" fill="none" stroke="#e2e8f0" stroke-width="3.5" stroke-opacity="0.75"/>
+                <path d="M672 435 L662 455 L682 455" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="672,345 662,365 682,365" fill="#e2e8f0"/>
                 <text x="672" y="470" fill="#e2e8f0" font-size="23" font-weight="700" text-anchor="middle">9</text>
             </g>
 
             <!-- Row 3 -->
             <g>
-                <rect x="255" y="495" width="120" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M272 545 L250 565 L272 585" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
-                <path d="M368 545 L390 565 L368 585" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
-                <path d="M317 615 L305 635 L329 635" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="317,500 305,525 329,525" fill="#e2e8f0"/>
+                <rect x="255" y="500" width="115" height="190" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M272 555 L250 575 L272 595" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
+                <path d="M368 555 L390 575 L368 595" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
+                <path d="M317 620 L305 640 L329 640" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="317,505 305,525 329,525" fill="#e2e8f0"/>
                 <text x="317" y="625" fill="#e2e8f0" font-size="25" font-weight="700" text-anchor="middle">10</text>
             </g>
             <g>
-                <rect x="615" y="495" width="120" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M632 545 L610 565 L632 585" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
-                <path d="M728 545 L750 565 L728 585" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
-                <path d="M677 615 L665 635 L689 635" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
-                <polygon points="677,500 665,525 689,525" fill="#e2e8f0"/>
+                <rect x="615" y="500" width="115" height="190" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
+                <path d="M632 555 L610 575 L632 595" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
+                <path d="M728 555 L750 575 L728 595" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.75"/>
+                <path d="M677 620 L665 640 L689 640" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-opacity="0.8"/>
+                <polygon points="677,505 665,525 689,525" fill="#e2e8f0"/>
                 <text x="677" y="625" fill="#e2e8f0" font-size="25" font-weight="700" text-anchor="middle">11</text>
             </g>
 

@@ -2,7 +2,7 @@ const hangar = document.getElementById('hangar-frame');
 
 const planes = [
     { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 300, y: 280, angle: 0, id: 'DA40-1' },
-    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 750, y: 420, angle: 45, id: 'DA40-2' }
+    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 750, y: 420, angle: 180, id: 'DA40-2' }
 ];
 
 let selectedPlane = planes[0];
@@ -13,8 +13,8 @@ const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
 const parkingSpots = [
-    {x: 197, y: 225}, {x: 332, y: 225}, {x: 467, y: 225},
-    {x: 602, y: 225}, {x: 737, y: 225},
+    {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
+    {x: 612, y: 225}, {x: 747, y: 225},
     {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
     {x: 317, y: 575}, {x: 677, y: 575}
 ];
@@ -34,6 +34,7 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
+// Initialize
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', (e) => {
@@ -48,7 +49,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag & Snap
+// Drag
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -100,6 +101,7 @@ document.addEventListener('mouseup', () => {
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
+// Rotation
 function rotate(degrees) {
     selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
     updatePlane(selectedPlane);
@@ -112,4 +114,27 @@ document.getElementById('rotate-right').addEventListener('click', () => rotate(1
 document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') rotate(-15);
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
+});
+
+// Auto-assign spot (nose toward door)
+const spotDropdown = document.getElementById('spot-assign');
+
+spotDropdown.addEventListener('change', () => {
+    if (!spotDropdown.value) return;
+
+    const spotIndex = parseInt(spotDropdown.value);
+    const targetSpot = parkingSpots[spotIndex];
+
+    if (targetSpot) {
+        selectedPlane.x = targetSpot.x;
+        selectedPlane.y = targetSpot.y;
+        selectedPlane.angle = 180;   // Nose pointing toward door
+        
+        updatePlane(selectedPlane);
+        updateTelemetry();
+        
+        selectedPlane.el.style.transition = 'all 0.6s ease-out';
+        
+        setTimeout(() => spotDropdown.value = '', 800);
+    }
 });
