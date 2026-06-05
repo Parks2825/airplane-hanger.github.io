@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="hangar-wrapper" id="hangar-frame">
+<div id="hangar-frame" class="hangar-wrapper">
 
 <svg class="hangar-svg" viewBox="0 0 2000 1000">
 
@@ -17,9 +17,9 @@
 
     <!-- Ramp -->
     <rect x="0" y="750" width="2000" height="250" fill="#475569"/>
-    <text x="1000" y="880" fill="#94a3b8" text-anchor="middle">RAMP AREA</text>
+    <text x="1000" y="880" text-anchor="middle" fill="#94a3b8">RAMP AREA</text>
 
-    <!-- FL9 Hangar -->
+    <!-- FL9 -->
     <rect x="80" y="60" width="960" height="520"
         fill="#94a3b8" stroke="#1e293b" stroke-width="5"/>
 
@@ -28,19 +28,29 @@
     <line x1="1127" y1="60" x2="1127" y2="580"
         stroke="#facc15" stroke-width="4" stroke-dasharray="12,10"/>
 
-    <!-- FL8 Hangar -->
+    <!-- FL8 -->
     <rect x="1215" y="180" width="700" height="400"
         fill="#cbd5f5" stroke="#1e293b" stroke-width="5"/>
 
 </svg>
 
-<!-- Aircraft -->
+<!-- PLANES -->
 <div id="airplane1" class="airplane-container active">
-  <div class="plane-visual">✈</div>
+    <div class="plane-visual">
+        <svg viewBox="0 0 200 135">
+            <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 L188,38 L173,51 L121,52 L104.5,91 L129,95 L140,101 L114,105 L103,101 L98,109 L89,101 L71,95 L95.5,91 L90,52 L42,52 L6,51 L12,38 L77,38 L92,35 L96,18 L89,15 L98,9 Z"
+                fill="white"/>
+        </svg>
+    </div>
 </div>
 
 <div id="airplane2" class="airplane-container">
-  <div class="plane-visual">✈</div>
+    <div class="plane-visual">
+        <svg viewBox="0 0 200 135">
+            <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 L188,38 L173,51 L121,52 L104.5,91 L129,95 L140,101 L114,105 L103,101 L98,109 L89,101 L71,95 L95.5,91 L90,52 L42,52 L6,51 L12,38 L77,38 L92,35 L96,18 L89,15 L98,9 Z"
+                fill="#a5b4fc"/>
+        </svg>
+    </div>
 </div>
 
 </div>
