@@ -33,8 +33,9 @@ const parkingSpots = [
     {x: 317, y: 575}, {x: 677, y: 575}
 ];
 
-const snapThreshold = 70;   // Tight snap detection
+const snapThreshold = 70;
 
+// Update functions
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
     rotDisplay.textContent = Math.round(selectedPlane.angle) + '°';
@@ -63,7 +64,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag System
+// === DRAG FUNCTIONALITY ===
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -78,6 +79,7 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('mousemove', (e) => {
     if (!isDragging || !currentDragPlane) return;
+
     const rect = hangar.getBoundingClientRect();
     currentDragPlane.x = e.clientX - rect.left;
     currentDragPlane.y = e.clientY - rect.top;
@@ -95,6 +97,7 @@ document.addEventListener('mouseup', () => {
 
     let closest = null;
     let minDist = Infinity;
+
     for (let spot of parkingSpots) {
         const dx = currentDragPlane.x - spot.x;
         const dy = currentDragPlane.y - spot.y;
@@ -133,7 +136,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// Auto-assign spot
+// === DROPDOWN AUTO-ASSIGN ===
 const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
