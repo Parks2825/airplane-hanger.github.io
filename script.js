@@ -33,7 +33,7 @@ const parkingSpots = [
     {x: 317, y: 575}, {x: 677, y: 575}
 ];
 
-const snapThreshold = 95;
+const snapThreshold = 70;   // Reduced collision / snap distance as requested
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -48,7 +48,7 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize
+// Initialize planes
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', (e) => {
@@ -78,10 +78,12 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('mousemove', (e) => {
     if (!isDragging || !currentDragPlane) return;
+
     const rect = hangar.getBoundingClientRect();
     currentDragPlane.x = e.clientX - rect.left;
     currentDragPlane.y = e.clientY - rect.top;
 
+    // Keep planes inside hangar bounds
     currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
     currentDragPlane.y = Math.max(80, Math.min(currentDragPlane.y, rect.height - 100));
 
@@ -95,6 +97,7 @@ document.addEventListener('mouseup', () => {
 
     let closest = null;
     let minDist = Infinity;
+
     for (let spot of parkingSpots) {
         const dx = currentDragPlane.x - spot.x;
         const dy = currentDragPlane.y - spot.y;
@@ -108,7 +111,7 @@ document.addEventListener('mouseup', () => {
     if (closest && minDist < snapThreshold) {
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180; // nose to door
+        currentDragPlane.angle = 180;           // Nose toward door
         currentDragPlane.el.style.transition = 'all 0.4s ease-out';
     } else {
         currentDragPlane.el.style.transition = 'transform 0.15s';
@@ -133,7 +136,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// Auto Assign Spot
+// Auto-assign spot
 const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
