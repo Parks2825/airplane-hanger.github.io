@@ -8,18 +8,18 @@ body {
     width: 100vw;
     min-height: 100vh;
     background: #0f172a;
-    overflow: auto;           /* Allows scrolling to see full hangar */
+    overflow: auto;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     position: relative;
     user-select: none;
     padding: 20px;
 }
 
-/* Main Hangar Container */
+/* Hangar Container */
 .hangar-wrapper {
     position: relative;
-    margin: 100px auto 100px;
-    width: 1150px;            /* Large enough to show full hangar */
+    margin: 100px auto 80px;
+    width: 1180px;
     height: 880px;
     background: #1e293b;
     box-shadow: 0 15px 60px rgba(0,0,0,0.8);
@@ -34,7 +34,7 @@ body {
     pointer-events: none; 
 }
 
-/* Hangar Title Label */
+/* Hangar Label */
 .hangar-label {
     position: absolute;
     top: 35px;
@@ -65,7 +65,7 @@ body {
     color: #94a3b8;
 }
 
-/* Telemetry Box */
+/* Telemetry */
 .hangar-telemetry-box {
     position: absolute;
     top: 20px;
@@ -102,10 +102,9 @@ body {
     font-size: 14px;
     z-index: 20;
     border: 1px solid #334155;
-    line-height: 1.45;
 }
 
-/* Rotation Buttons */
+/* Buttons */
 .controls {
     position: absolute;
     bottom: 30px;
