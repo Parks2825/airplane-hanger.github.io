@@ -49,7 +49,7 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize
+// Initialize planes
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', (e) => {
@@ -64,7 +64,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// === DRAG FUNCTIONALITY ===
+// ==================== DRAG FUNCTIONALITY ====================
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -72,8 +72,11 @@ document.addEventListener('mousedown', (e) => {
     const planeEl = e.target.closest('.airplane-container');
     if (planeEl) {
         currentDragPlane = planes.find(p => p.el === planeEl);
-        isDragging = true;
-        currentDragPlane.el.style.transition = 'none';
+        if (currentDragPlane) {
+            isDragging = true;
+            currentDragPlane.el.style.transition = 'none';
+            currentDragPlane.el.style.zIndex = 30;
+        }
     }
 });
 
@@ -84,6 +87,7 @@ document.addEventListener('mousemove', (e) => {
     currentDragPlane.x = e.clientX - rect.left;
     currentDragPlane.y = e.clientY - rect.top;
 
+    // Keep inside hangar
     currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
     currentDragPlane.y = Math.max(80, Math.min(currentDragPlane.y, rect.height - 100));
 
@@ -95,6 +99,7 @@ document.addEventListener('mouseup', () => {
     if (!isDragging || !currentDragPlane) return;
     isDragging = false;
 
+    // Snap to nearest spot
     let closest = null;
     let minDist = Infinity;
 
@@ -119,6 +124,8 @@ document.addEventListener('mouseup', () => {
 
     updatePlane(currentDragPlane);
     if (currentDragPlane === selectedPlane) updateTelemetry();
+
+    currentDragPlane.el.style.zIndex = 10;
 });
 
 // Rotation
@@ -136,7 +143,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// === DROPDOWN AUTO-ASSIGN ===
+// Auto-assign dropdown
 const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
@@ -154,7 +161,6 @@ spotDropdown.addEventListener('change', () => {
         updateTelemetry();
 
         selectedPlane.el.style.transition = 'all 0.65s cubic-bezier(0.34, 1.56, 0.64, 1)';
-
-        setTimeout(() => { spotDropdown.value = ''; }, 700);
+        setTimeout(() => spotDropdown.value = '', 700);
     }
 });
