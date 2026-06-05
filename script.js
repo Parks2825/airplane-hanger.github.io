@@ -1,46 +1,59 @@
 const hangar = document.getElementById('hangar-frame');
 
 // =====================
-// CONSTANTS
+// SCALE + AIRCRAFT DATA
 // =====================
-const PLANE_WIDTH = 160;
-const PLANE_HEIGHT = 130;
+const SCALE = 3.5;
 
-const CLEARANCE_X = 40;
-const CLEARANCE_Y = 40;
-
-const snapThreshold = 90;
-
-const rampZone = {
-    yStart: 750
+const AIRCRAFT_SPECS = {
+    DA40: { width: 36, length: 26 }
 };
 
+function getPlaneDimensions(plane) {
+    const spec = AIRCRAFT_SPECS[plane.type];
+    return {
+        width: spec.width * SCALE,
+        height: spec.length * SCALE
+    };
+}
+
 // =====================
-// HANGAR DEFINITIONS
+// CONSTANTS
+// =====================
+const CLEARANCE_X = 25;
+const CLEARANCE_Y = 25;
+const snapThreshold = 90;
+
+const rampZone = { yStart: 750 };
+
+// =====================
+// HANGARS
 // =====================
 const hangars = {
     FL9: {
         name: "FL9",
         spots: [
-            {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
-            {x: 612, y: 225}, {x: 747, y: 225},
-            {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
-            {x: 317, y: 575}, {x: 677, y: 575}
+            {x: 200, y: 200}, {x: 340, y: 200}, {x: 480, y: 200},
+            {x: 620, y: 200}, {x: 760, y: 200},
+
+            {x: 260, y: 380}, {x: 420, y: 380},
+            {x: 580, y: 380}, {x: 740, y: 380},
+
+            {x: 350, y: 560}, {x: 650, y: 560}
         ]
     },
     FL10: {
         name: "FL10",
         spots: [
-            {x: 250, y: 250},
-            {x: 450, y: 250},
-            {x: 650, y: 250}
+            {x: 250, y: 220},
+            {x: 450, y: 220},
+            {x: 650, y: 220}
         ]
     }
 };
 
 let currentHangar = hangars.FL9;
 
-// add occupancy tracking
 function cloneSpots(spots) {
     return spots.map(s => ({...s, occupiedBy: null}));
 }
@@ -55,18 +68,20 @@ const planes = [
         el: document.getElementById('airplane1'),
         visual: document.querySelector('#airplane1 .plane-visual'),
         x: 300,
-        y: 280,
+        y: 800,
         angle: 0,
         id: 'DA40-1',
+        type: 'DA40',
         assignedSpot: null
     },
     {
         el: document.getElementById('airplane2'),
         visual: document.querySelector('#airplane2 .plane-visual'),
-        x: 750,
-        y: 420,
+        x: 550,
+        y: 820,
         angle: 180,
         id: 'DA40-2',
+        type: 'DA40',
         assignedSpot: null
     }
 ];
@@ -89,11 +104,17 @@ function updateTelemetry() {
 }
 
 // =====================
-// CORE FUNCTIONS
+// CORE
 // =====================
 function updatePlane(plane) {
-    plane.el.style.left = (plane.x - PLANE_WIDTH / 2) + 'px';
-    plane.el.style.top = (plane.y - PLANE_HEIGHT / 2) + 'px';
+    const { width, height } = getPlaneDimensions(plane);
+
+    plane.el.style.width = width + 'px';
+    plane.el.style.height = height + 'px';
+
+    plane.el.style.left = (plane.x - width / 2) + 'px';
+    plane.el.style.top = (plane.y - height / 2) + 'px';
+
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
@@ -102,20 +123,23 @@ function isInRamp(plane) {
 }
 
 function isOverlapping(p1, p2) {
+    const d1 = getPlaneDimensions(p1);
+    const d2 = getPlaneDimensions(p2);
+
     const dx = Math.abs(p1.x - p2.x);
     const dy = Math.abs(p1.y - p2.y);
 
-    return dx < (PLANE_WIDTH + CLEARANCE_X) &&
-           dy < (PLANE_HEIGHT + CLEARANCE_Y);
+    return dx < (d1.width/2 + d2.width/2 + CLEARANCE_X) &&
+           dy < (d1.height/2 + d2.height/2 + CLEARANCE_Y);
 }
 
 // =====================
-// INITIALIZE
+// INIT
 // =====================
 planes.forEach(plane => {
     updatePlane(plane);
 
-    plane.el.addEventListener('mousedown', (e) => {
+    plane.el.addEventListener('mousedown', () => {
         selectedPlane = plane;
         planes.forEach(p => p.el.classList.remove('active'));
         plane.el.classList.add('active');
@@ -130,7 +154,6 @@ updateTelemetry();
 // =====================
 let isDragging = false;
 let currentDragPlane = null;
-
 let offsetX = 0;
 let offsetY = 0;
 
@@ -152,13 +175,13 @@ document.addEventListener('mousemove', (e) => {
     if (!isDragging || !currentDragPlane) return;
 
     const rect = hangar.getBoundingClientRect();
+    const dims = getPlaneDimensions(currentDragPlane);
 
-    let newX = e.clientX - rect.left - offsetX + PLANE_WIDTH / 2;
-    let newY = e.clientY - rect.top - offsetY + PLANE_HEIGHT / 2;
+    let newX = e.clientX - rect.left - offsetX + dims.width / 2;
+    let newY = e.clientY - rect.top - offsetY + dims.height / 2;
 
-    // bounds
-    newX = Math.max(80, Math.min(newX, rect.width - 80));
-    newY = Math.max(60, Math.min(newY, rect.height - 80));
+    newX = Math.max(dims.width / 2, Math.min(newX, rect.width - dims.width / 2));
+    newY = Math.max(dims.height / 2, Math.min(newY, rect.height - dims.height / 2));
 
     const testPlane = { ...currentDragPlane, x: newX, y: newY };
 
@@ -204,11 +227,17 @@ document.addEventListener('mouseup', () => {
 
     if (closest && minDist < snapThreshold && !isInRamp(currentDragPlane)) {
 
+        if (closest.occupiedBy && closest.occupiedBy !== currentDragPlane.id) {
+            updatePlane(currentDragPlane);
+            return;
+        }
+
         parkingSpots.forEach(s => {
             if (s.occupiedBy === currentDragPlane.id) s.occupiedBy = null;
         });
 
         closest.occupiedBy = currentDragPlane.id;
+        currentDragPlane.assignedSpot = closest;
 
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
@@ -233,13 +262,8 @@ function rotate(deg) {
 document.getElementById('rotate-left').addEventListener('click', () => rotate(-15));
 document.getElementById('rotate-right').addEventListener('click', () => rotate(15));
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'a' || e.key === 'ArrowLeft') rotate(-15);
-    if (e.key === 'd' || e.key === 'ArrowRight') rotate(15);
-});
-
 // =====================
-// DROPDOWN ASSIGNMENT
+// DROPDOWN
 // =====================
 const spotDropdown = document.getElementById('spot-assign');
 
@@ -249,7 +273,10 @@ spotDropdown.addEventListener('change', () => {
     const spotIndex = parseInt(spotDropdown.value);
     const targetSpot = parkingSpots[spotIndex];
 
-    if (!targetSpot || targetSpot.occupiedBy) return;
+    if (!targetSpot || targetSpot.occupiedBy) {
+        alert("Spot already occupied");
+        return;
+    }
 
     parkingSpots.forEach(s => {
         if (s.occupiedBy === selectedPlane.id) s.occupiedBy = null;
@@ -268,19 +295,4 @@ spotDropdown.addEventListener('change', () => {
 });
 
 // =====================
-// HANGAR SWITCHING
-// =====================
-document.getElementById('hangar-select').addEventListener('change', (e) => {
-    const selected = e.target.value;
-
-    currentHangar = hangars[selected];
-    parkingSpots = cloneSpots(currentHangar.spots);
-
-    // move planes to ramp on switch
-    planes.forEach((plane, i) => {
-        plane.x = 200 + i * 180;
-        plane.y = 820;
-        plane.assignedSpot = null;
-        updatePlane(plane);
-    });
-});
+// HANGAR SWITCH
