@@ -1,298 +1,203 @@
 const hangar = document.getElementById('hangar-frame');
 
-// =====================
-// SCALE + AIRCRAFT DATA
-// =====================
+// ======================
+// SCALE + AIRCRAFT
+// ======================
 const SCALE = 3.5;
 
 const AIRCRAFT_SPECS = {
     DA40: { width: 36, length: 26 }
 };
 
-function getPlaneDimensions(plane) {
-    const spec = AIRCRAFT_SPECS[plane.type];
-    return {
-        width: spec.width * SCALE,
-        height: spec.length * SCALE
-    };
+function getPlaneDimensions(p) {
+    const s = AIRCRAFT_SPECS[p.type];
+    return { width: s.width * SCALE, height: s.length * SCALE };
 }
 
-// =====================
-// CONSTANTS
-// =====================
-const CLEARANCE_X = 25;
-const CLEARANCE_Y = 25;
-const snapThreshold = 90;
-
+// ======================
+// ZONES
+// ======================
 const rampZone = { yStart: 750 };
 
-// =====================
-// HANGARS
-// =====================
-const hangars = {
-    FL9: {
-        name: "FL9",
-        spots: [
-            {x: 200, y: 200}, {x: 340, y: 200}, {x: 480, y: 200},
-            {x: 620, y: 200}, {x: 760, y: 200},
-
-            {x: 260, y: 380}, {x: 420, y: 380},
-            {x: 580, y: 380}, {x: 740, y: 380},
-
-            {x: 350, y: 560}, {x: 650, y: 560}
-        ]
-    },
-    FL10: {
-        name: "FL10",
-        spots: [
-            {x: 250, y: 220},
-            {x: 450, y: 220},
-            {x: 650, y: 220}
-        ]
-    }
+const taxiwayZone = {
+    xStart: 1040,
+    xEnd: 1215
 };
 
-let currentHangar = hangars.FL9;
-
-function cloneSpots(spots) {
-    return spots.map(s => ({...s, occupiedBy: null}));
+function isInRamp(p) {
+    return p.y > rampZone.yStart;
 }
 
-let parkingSpots = cloneSpots(currentHangar.spots);
+function isInTaxiway(p) {
+    return p.x > taxiwayZone.xStart && p.x < taxiwayZone.xEnd;
+}
 
-// =====================
+// ======================
+// PARKING SPOTS
+// ======================
+const parkingSpots = [
+    // FL9
+    {x:200,y:200},{x:340,y:200},{x:480,y:200},{x:620,y:200},{x:760,y:200},
+    {x:260,y:380},{x:420,y:380},{x:580,y:380},{x:740,y:380},
+    {x:350,y:560},{x:650,y:560},
+
+    // FL8
+    {x:1300,y:300},{x:1500,y:300},{x:1700,y:300},
+    {x:1400,y:450},{x:1600,y:450}
+].map(s => ({...s, occupiedBy:null}));
+
+// ======================
 // PLANES
-// =====================
+// ======================
 const planes = [
     {
-        el: document.getElementById('airplane1'),
-        visual: document.querySelector('#airplane1 .plane-visual'),
-        x: 300,
-        y: 800,
-        angle: 0,
-        id: 'DA40-1',
-        type: 'DA40',
-        assignedSpot: null
+        el: airplane1,
+        visual: airplane1.querySelector('.plane-visual'),
+        x:300,y:800,angle:0,id:'DA40-1',type:'DA40'
     },
     {
-        el: document.getElementById('airplane2'),
-        visual: document.querySelector('#airplane2 .plane-visual'),
-        x: 550,
-        y: 820,
-        angle: 180,
-        id: 'DA40-2',
-        type: 'DA40',
-        assignedSpot: null
+        el: airplane2,
+        visual: airplane2.querySelector('.plane-visual'),
+        x:600,y:820,angle:180,id:'DA40-2',type:'DA40'
     }
 ];
 
 let selectedPlane = planes[0];
 
-// =====================
-// TELEMETRY
-// =====================
-const rotDisplay = document.getElementById('telemetry-rot');
-const xDisplay = document.getElementById('telemetry-x');
-const yDisplay = document.getElementById('telemetry-y');
-const selectedDisplay = document.getElementById('selected-plane');
+// ======================
+// UPDATE
+// ======================
+function updatePlane(p){
+    const d = getPlaneDimensions(p);
 
-function updateTelemetry() {
-    selectedDisplay.textContent = selectedPlane.id;
-    rotDisplay.textContent = Math.round(selectedPlane.angle) + '°';
-    xDisplay.textContent = Math.round(selectedPlane.x) + 'px';
-    yDisplay.textContent = Math.round(selectedPlane.y) + 'px';
+    p.el.style.width = d.width+'px';
+    p.el.style.height = d.height+'px';
+    p.el.style.left = (p.x-d.width/2)+'px';
+    p.el.style.top = (p.y-d.height/2)+'px';
+
+    p.visual.style.setProperty('--plane-angle', p.angle+'deg');
 }
 
-// =====================
-// CORE
-// =====================
-function updatePlane(plane) {
-    const { width, height } = getPlaneDimensions(plane);
+// ======================
+// COLLISION
+// ======================
+const CLEARANCE = 25;
 
-    plane.el.style.width = width + 'px';
-    plane.el.style.height = height + 'px';
-
-    plane.el.style.left = (plane.x - width / 2) + 'px';
-    plane.el.style.top = (plane.y - height / 2) + 'px';
-
-    plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
-}
-
-function isInRamp(plane) {
-    return plane.y > rampZone.yStart;
-}
-
-function isOverlapping(p1, p2) {
+function isOverlapping(p1,p2){
     const d1 = getPlaneDimensions(p1);
     const d2 = getPlaneDimensions(p2);
 
-    const dx = Math.abs(p1.x - p2.x);
-    const dy = Math.abs(p1.y - p2.y);
+    let factor = 1;
+    if (isInTaxiway(p1)||isInTaxiway(p2)) factor=0.7;
 
-    return dx < (d1.width/2 + d2.width/2 + CLEARANCE_X) &&
-           dy < (d1.height/2 + d2.height/2 + CLEARANCE_Y);
+    return Math.abs(p1.x-p2.x) < (d1.width/2+d2.width/2+CLEARANCE*factor) &&
+           Math.abs(p1.y-p2.y) < (d1.height/2+d2.height/2+CLEARANCE*factor);
 }
 
-// =====================
+// ======================
 // INIT
-// =====================
-planes.forEach(plane => {
-    updatePlane(plane);
+// ======================
+planes.forEach(p=>{
+    updatePlane(p);
 
-    plane.el.addEventListener('mousedown', () => {
-        selectedPlane = plane;
-        planes.forEach(p => p.el.classList.remove('active'));
-        plane.el.classList.add('active');
-        updateTelemetry();
+    p.el.addEventListener('mousedown',()=>{
+        selectedPlane=p;
+        planes.forEach(x=>x.el.classList.remove('active'));
+        p.el.classList.add('active');
     });
 });
 
-updateTelemetry();
+// ======================
+// DRAG
+// ======================
+let dragging=false,dragPlane,offX,offY;
 
-// =====================
-// DRAG SYSTEM
-// =====================
-let isDragging = false;
-let currentDragPlane = null;
-let offsetX = 0;
-let offsetY = 0;
+document.addEventListener('mousedown',e=>{
+    const el=e.target.closest('.airplane-container');
+    if(!el)return;
 
-document.addEventListener('mousedown', (e) => {
-    const planeEl = e.target.closest('.airplane-container');
-    if (!planeEl) return;
+    dragPlane=planes.find(p=>p.el===el);
+    dragging=true;
 
-    currentDragPlane = planes.find(p => p.el === planeEl);
-    isDragging = true;
+    const r=el.getBoundingClientRect();
+    offX=e.clientX-r.left;
+    offY=e.clientY-r.top;
 
-    const rect = planeEl.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-
-    currentDragPlane.el.classList.add('dragging');
+    el.classList.add('dragging');
 });
 
-document.addEventListener('mousemove', (e) => {
-    if (!isDragging || !currentDragPlane) return;
+document.addEventListener('mousemove',e=>{
+    if(!dragging)return;
 
-    const rect = hangar.getBoundingClientRect();
-    const dims = getPlaneDimensions(currentDragPlane);
+    const rect=hangar.getBoundingClientRect();
+    const d=getPlaneDimensions(dragPlane);
 
-    let newX = e.clientX - rect.left - offsetX + dims.width / 2;
-    let newY = e.clientY - rect.top - offsetY + dims.height / 2;
+    let nx=e.clientX-rect.left-offX+d.width/2;
+    let ny=e.clientY-rect.top-offY+d.height/2;
 
-    newX = Math.max(dims.width / 2, Math.min(newX, rect.width - dims.width / 2));
-    newY = Math.max(dims.height / 2, Math.min(newY, rect.height - dims.height / 2));
+    nx=Math.max(d.width/2,Math.min(nx,rect.width-d.width/2));
+    ny=Math.max(d.height/2,Math.min(ny,rect.height-d.height/2));
 
-    const testPlane = { ...currentDragPlane, x: newX, y: newY };
+    const test={...dragPlane,x:nx,y:ny};
 
-    const collision = planes.some(p =>
-        p !== currentDragPlane &&
-        !isInRamp(testPlane) &&
-        isOverlapping(testPlane, p)
-    );
+    const collision=planes.some(p=>p!==dragPlane &&
+        !isInRamp(test)&& isOverlapping(test,p));
 
-    if (collision) {
-        currentDragPlane.el.classList.add('collision');
-    } else {
-        currentDragPlane.el.classList.remove('collision');
-        currentDragPlane.x = newX;
-        currentDragPlane.y = newY;
-        updatePlane(currentDragPlane);
+    if(collision){
+        dragPlane.el.classList.add('collision');
+    }else{
+        dragPlane.el.classList.remove('collision');
+        dragPlane.x=nx; dragPlane.y=ny;
+        updatePlane(dragPlane);
     }
 
-    if (currentDragPlane === selectedPlane) updateTelemetry();
+    dragPlane.el.classList.toggle('taxiway',isInTaxiway(dragPlane));
 });
 
-document.addEventListener('mouseup', () => {
-    if (!isDragging || !currentDragPlane) return;
+document.addEventListener('mouseup',()=>{
+    if(!dragging)return;
+    dragging=false;
 
-    isDragging = false;
-    currentDragPlane.el.classList.remove('dragging');
+    dragPlane.el.classList.remove('dragging');
 
-    let closest = null;
-    let minDist = Infinity;
+    let closest=null,min=Infinity;
 
-    for (let spot of parkingSpots) {
-        if (spot.occupiedBy && spot.occupiedBy !== currentDragPlane.id) continue;
+    for(let s of parkingSpots){
+        if(s.occupiedBy && s.occupiedBy!==dragPlane.id)continue;
 
-        const dx = currentDragPlane.x - spot.x;
-        const dy = currentDragPlane.y - spot.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < minDist) {
-            minDist = dist;
-            closest = spot;
-        }
+        const d=Math.hypot(dragPlane.x-s.x,dragPlane.y-s.y);
+        if(d<min){min=d;closest=s;}
     }
 
-    if (closest && minDist < snapThreshold && !isInRamp(currentDragPlane)) {
+    if(closest && min<90 && !isInRamp(dragPlane) && !isInTaxiway(dragPlane)){
 
-        if (closest.occupiedBy && closest.occupiedBy !== currentDragPlane.id) {
-            updatePlane(currentDragPlane);
-            return;
-        }
+        if(closest.occupiedBy)return;
 
-        parkingSpots.forEach(s => {
-            if (s.occupiedBy === currentDragPlane.id) s.occupiedBy = null;
+        parkingSpots.forEach(s=>{
+            if(s.occupiedBy===dragPlane.id)s.occupiedBy=null;
         });
 
-        closest.occupiedBy = currentDragPlane.id;
-        currentDragPlane.assignedSpot = closest;
+        closest.occupiedBy=dragPlane.id;
 
-        currentDragPlane.x = closest.x;
-        currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180;
+        dragPlane.x=closest.x;
+        dragPlane.y=closest.y;
 
-        currentDragPlane.el.style.transition = 'all 0.35s ease-out';
+        // orientation logic
+        if(closest.x < 1000){
+            dragPlane.angle=180;
+        } else {
+            dragPlane.angle=270;
+        }
     }
 
-    updatePlane(currentDragPlane);
-    if (currentDragPlane === selectedPlane) updateTelemetry();
+    updatePlane(dragPlane);
 });
 
-// =====================
+// ======================
 // ROTATION
-// =====================
-function rotate(deg) {
-    selectedPlane.angle = (selectedPlane.angle + deg + 360) % 360;
+// ======================
+document.addEventListener('keydown',e=>{
+    if(e.key==='a') selectedPlane.angle-=15;
+    if(e.key==='d') selectedPlane.angle+=15;
     updatePlane(selectedPlane);
-    updateTelemetry();
-}
-
-document.getElementById('rotate-left').addEventListener('click', () => rotate(-15));
-document.getElementById('rotate-right').addEventListener('click', () => rotate(15));
-
-// =====================
-// DROPDOWN
-// =====================
-const spotDropdown = document.getElementById('spot-assign');
-
-spotDropdown.addEventListener('change', () => {
-    if (!spotDropdown.value) return;
-
-    const spotIndex = parseInt(spotDropdown.value);
-    const targetSpot = parkingSpots[spotIndex];
-
-    if (!targetSpot || targetSpot.occupiedBy) {
-        alert("Spot already occupied");
-        return;
-    }
-
-    parkingSpots.forEach(s => {
-        if (s.occupiedBy === selectedPlane.id) s.occupiedBy = null;
-    });
-
-    targetSpot.occupiedBy = selectedPlane.id;
-
-    selectedPlane.x = targetSpot.x;
-    selectedPlane.y = targetSpot.y;
-    selectedPlane.angle = 180;
-
-    updatePlane(selectedPlane);
-    updateTelemetry();
-
-    setTimeout(() => spotDropdown.value = '', 600);
 });
-
-// =====================
-// HANGAR SWITCH
