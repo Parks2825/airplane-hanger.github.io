@@ -1,205 +1,157 @@
 const hangar = document.getElementById('hangar-frame');
 
-// ======================
-// ZOOM SYSTEM
-// ======================
-let zoom = 1;
-
-hangar.addEventListener('wheel', (e) => {
-    e.preventDefault();
-
-    const rect = hangar.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const delta = e.deltaY < 0 ? 0.1 : -0.1;
-    zoom = Math.min(2.5, Math.max(0.6, zoom + delta));
-
-    hangar.style.transform = `scale(${zoom})`;
-});
-
-// ======================
-// SCALE + AIRCRAFT
-// ======================
-const SCALE = 3.5;
-const CLEARANCE = 25;
-
-const AIRCRAFT = {
-    DA40: { w: 36, h: 26 }
-};
-
-function dims(p){
-    const s = AIRCRAFT[p.type];
-    return { w: s.w*SCALE, h: s.h*SCALE };
-}
-
-// ======================
-// ZONES
-// ======================
-const rampY = 750;
-const taxi = { x1:1040, x2:1215 };
-
-const inRamp = p => p.y > rampY;
-const inTaxi = p => p.x > taxi.x1 && p.x < taxi.x2;
-
-// ======================
-// PARKING SPOTS
-// ======================
-const spots = [
-    {x:207,y:225},{x:342,y:225},{x:477,y:225},
-    {x:612,y:225},{x:747,y:225},
-    {x:252,y:400},{x:392,y:400},{x:532,y:400},{x:672,y:400},
-    {x:317,y:575},{x:677,y:575},
-
-    {x:1320,y:300},{x:1500,y:300},{x:1680,y:300},
-    {x:1400,y:450},{x:1600,y:450}
-].map(s => ({...s, occupied:null}));
-
-// ======================
-// PLANES (START ON RAMP)
-// ======================
 const planes = [
-{
-    el: airplane1,
-    visual: airplane1.querySelector('.plane-visual'),
-    x:350, y:820,
-    angle:0,
-    id:"P1",
-    type:"DA40"
-},
-{
-    el: airplane2,
-    visual: airplane2.querySelector('.plane-visual'),
-    x:650, y:820,
-    angle:180,
-    id:"P2",
-    type:"DA40"
-}
+    {
+        el: document.getElementById('airplane1'),
+        visual: document.querySelector('#airplane1 .plane-visual'),
+        x: 420,
+        y: 320,
+        angle: 180,
+        id: 'DA40-1'
+    },
+    {
+        el: document.getElementById('airplane2'),
+        visual: document.querySelector('#airplane2 .plane-visual'),
+        x: 720,
+        y: 380,
+        angle: 180,
+        id: 'DA40-2'
+    }
 ];
 
-let selected = planes[0];
+let selectedPlane = planes[0];
 
-// ======================
-// DRAW
-// ======================
-function draw(p){
-    const d = dims(p);
+const rotDisplay = document.getElementById('telemetry-rot');
+const xDisplay = document.getElementById('telemetry-x');
+const yDisplay = document.getElementById('telemetry-y');
+const selectedDisplay = document.getElementById('selected-plane');
 
-    p.el.style.width = d.w+"px";
-    p.el.style.height = d.h+"px";
-    p.el.style.left = (p.x-d.w/2)+"px";
-    p.el.style.top = (p.y-d.h/2)+"px";
+const parkingSpots = [
+    {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
+    {x: 612, y: 225}, {x: 747, y: 225},
+    {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
+    {x: 317, y: 575}, {x: 677, y: 575}
+];
 
-    p.visual.style.setProperty('--angle', p.angle+"deg");
+const snapThreshold = 95;
+
+function updateTelemetry() {
+    selectedDisplay.textContent = selectedPlane.id;
+    rotDisplay.textContent = Math.round(selectedPlane.angle) + '°';
+    xDisplay.textContent = Math.round(selectedPlane.x) + 'px';
+    yDisplay.textContent = Math.round(selectedPlane.y) + 'px';
 }
 
-// ======================
-// COLLISION
-// ======================
-function overlap(a,b){
-    const d1=dims(a), d2=dims(b);
-    const factor = (inTaxi(a)||inTaxi(b)) ? 0.7 : 1;
-
-    return Math.abs(a.x-b.x) < (d1.w/2+d2.w/2+CLEARANCE*factor)
-        && Math.abs(a.y-b.y) < (d1.h/2+d2.h/2+CLEARANCE*factor);
+function updatePlane(plane) {
+    plane.el.style.left = (plane.x - 85) + 'px';
+    plane.el.style.top = (plane.y - 70) + 'px';
+    plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// ======================
-// INIT
-// ======================
-planes.forEach(p=>{
-    draw(p);
-    p.el.onclick=()=>{
-        selected=p;
-        planes.forEach(x=>x.el.classList.remove('active'));
-        p.el.classList.add('active');
-    };
+// Initialize
+planes.forEach(plane => {
+    updatePlane(plane);
+    plane.el.addEventListener('mousedown', (e) => {
+        if (e.detail === 1) {
+            selectedPlane = plane;
+            planes.forEach(p => p.el.classList.remove('active'));
+            plane.el.classList.add('active');
+            updateTelemetry();
+        }
+    });
 });
 
-// ======================
-// DRAG
-// ======================
-let dragging=false, cur, ox, oy;
+updateTelemetry();
 
-document.addEventListener('mousedown',e=>{
-    const el=e.target.closest('.airplane-container');
-    if(!el)return;
+// Drag System
+let isDragging = false;
+let currentDragPlane = null;
 
-    cur=planes.find(p=>p.el===el);
-    dragging=true;
-
-    const r=el.getBoundingClientRect();
-    ox=e.clientX-r.left;
-    oy=e.clientY-r.top;
-
-    cur.el.classList.add('dragging');
+document.addEventListener('mousedown', (e) => {
+    const planeEl = e.target.closest('.airplane-container');
+    if (planeEl) {
+        currentDragPlane = planes.find(p => p.el === planeEl);
+        isDragging = true;
+        currentDragPlane.el.style.transition = 'none';
+    }
 });
 
-document.addEventListener('mousemove',e=>{
-    if(!dragging)return;
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging || !currentDragPlane) return;
+    const rect = hangar.getBoundingClientRect();
+    currentDragPlane.x = e.clientX - rect.left;
+    currentDragPlane.y = e.clientY - rect.top;
 
-    const rect=hangar.getBoundingClientRect();
-    const d=dims(cur);
+    currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
+    currentDragPlane.y = Math.max(80, Math.min(currentDragPlane.y, rect.height - 100));
 
-    let x=e.clientX/zoom - rect.left/zoom - ox/zoom + d.w/2;
-    let y=e.clientY/zoom - rect.top/zoom - oy/zoom + d.h/2;
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
+});
 
-    x=Math.max(d.w/2,Math.min(x,2000-d.w/2));
-    y=Math.max(d.h/2,Math.min(y,1000-d.h/2));
+document.addEventListener('mouseup', () => {
+    if (!isDragging || !currentDragPlane) return;
+    isDragging = false;
 
-    const test={...cur,x,y};
+    let closest = null;
+    let minDist = Infinity;
+    for (let spot of parkingSpots) {
+        const dx = currentDragPlane.x - spot.x;
+        const dy = currentDragPlane.y - spot.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < minDist) {
+            minDist = dist;
+            closest = spot;
+        }
+    }
 
-    const hit=planes.some(p=>p!==cur && !inRamp(test) && overlap(test,p));
-
-    if(hit){
-        cur.el.classList.add('collision');
+    if (closest && minDist < snapThreshold) {
+        currentDragPlane.x = closest.x;
+        currentDragPlane.y = closest.y;
+        currentDragPlane.angle = 180; // nose to door
+        currentDragPlane.el.style.transition = 'all 0.4s ease-out';
     } else {
-        cur.el.classList.remove('collision');
-        cur.x=x;
-        cur.y=y;
-        draw(cur);
+        currentDragPlane.el.style.transition = 'transform 0.15s';
     }
 
-    cur.el.classList.toggle('taxiway',inTaxi(cur));
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-document.addEventListener('mouseup',()=>{
-    if(!dragging)return;
-    dragging=false;
+// Rotation
+function rotate(degrees) {
+    selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
+    updatePlane(selectedPlane);
+    updateTelemetry();
+}
 
-    cur.el.classList.remove('dragging');
+document.getElementById('rotate-left').addEventListener('click', () => rotate(-15));
+document.getElementById('rotate-right').addEventListener('click', () => rotate(15));
 
-    let closest=null, min=9999;
-
-    for(let s of spots){
-        if(s.occupied && s.occupied!==cur.id) continue;
-
-        const d=Math.hypot(cur.x-s.x,cur.y-s.y);
-        if(d<min){min=d;closest=s;}
-    }
-
-    if(closest && min<90 && !inRamp(cur) && !inTaxi(cur)){
-        if(closest.occupied) return;
-
-        spots.forEach(s=>{
-            if(s.occupied===cur.id) s.occupied=null;
-        });
-
-        closest.occupied = cur.id;
-        cur.x = closest.x;
-        cur.y = closest.y;
-
-        cur.angle = (cur.x < 1000) ? 180 : 270;
-    }
-
-    draw(cur);
+document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') rotate(-15);
+    if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// ======================
-// ROTATION
-// ======================
-document.addEventListener('keydown',e=>{
-    if(e.key==='a'||e.key==='ArrowLeft') selected.angle-=15;
-    if(e.key==='d'||e.key==='ArrowRight') selected.angle+=15;
-    draw(selected);
+// Auto Assign Spot
+const spotDropdown = document.getElementById('spot-assign');
+
+spotDropdown.addEventListener('change', () => {
+    if (!spotDropdown.value) return;
+
+    const spotIndex = parseInt(spotDropdown.value);
+    const target = parkingSpots[spotIndex];
+
+    if (target) {
+        selectedPlane.x = target.x;
+        selectedPlane.y = target.y;
+        selectedPlane.angle = 180;   // Nose toward door
+
+        updatePlane(selectedPlane);
+        updateTelemetry();
+
+        selectedPlane.el.style.transition = 'all 0.65s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+        setTimeout(() => { spotDropdown.value = ''; }, 700);
+    }
 });
