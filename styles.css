@@ -4,12 +4,22 @@ body {
     overflow: hidden;
 }
 
+/* ZOOM BASE */
 .hangar-wrapper {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    width: 2000px;
+    height: 1000px;
+
+    transform-origin: top left;
 }
 
+/* SVG */
+.hangar-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* PLANES */
 .airplane-container {
     position: absolute;
     cursor: grab;
@@ -28,17 +38,18 @@ body {
     filter: drop-shadow(0 0 10px gold);
 }
 
+.airplane-container.active {
+    filter: drop-shadow(0 0 10px #38bdf8);
+}
+
+/* PLANE VISUAL */
 .plane-visual {
     width: 100%;
     height: 100%;
-    display: flex;
+    transform: rotate(var(--angle, 0deg));
 }
 
 .plane-visual svg {
     width: 100%;
     height: 100%;
-}
-
-.airplane-container.active {
-    filter: drop-shadow(0 0 10px #38bdf8);
 }
