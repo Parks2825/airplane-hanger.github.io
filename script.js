@@ -13,10 +13,16 @@ const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
 const parkingSpots = [
-    {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
-    {x: 612, y: 225}, {x: 747, y: 225},
-    {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
-    {x: 317, y: 575}, {x: 677, y: 575}
+    {x: 260, y: 195}, // A
+    {x: 460, y: 195}, // B
+    {x: 660, y: 295}, // C
+    {x: 860, y: 195}, // D
+    {x: 1060, y: 295}, // E
+    {x: 260, y: 435}, // F
+    {x: 660, y: 535}, // G
+    {x: 1060, y: 535}, // H
+    {x: 260, y: 675}, // I
+    {x: 660, y: 675}  // J
 ];
 
 const snapThreshold = 70;
