@@ -10,7 +10,7 @@
 
     <div class="instructions">
         🛩️ Click a plane to select • Drag to move<br>
-        A / D or Arrow Keys to rotate • Use dropdown to assign spot
+        A / D or Arrow Keys to rotate • Dropdown to assign spot
     </div>
 
     <div class="hangar-telemetry-box">
@@ -21,6 +21,21 @@
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
         <div>X: <span id="telemetry-x" class="telemetry-highlight">—</span></div>
         <div>Y: <span id="telemetry-y" class="telemetry-highlight">—</span></div>
+        
+        <div style="margin-top:12px; padding-top:8px; border-top:1px solid #334155;">
+            <strong>ASSIGN SPOT:</strong><br>
+            <select id="spot-assign" style="margin-top:6px; padding:6px; width:100%; background:#1e293b; color:#e2e8f0; border:1px solid #64748b; border-radius:6px;">
+                <option value="">Select Spot...</option>
+                <option value="0">A</option><option value="1">B</option><option value="2">C</option>
+                <option value="3">D</option><option value="4">E</option><option value="5">F</option>
+                <option value="6">G</option><option value="7">H</option><option value="8">I</option>
+                <option value="9">J</option>
+                <option value="10">Ramp 1</option><option value="11">Ramp 2</option><option value="12">Ramp 3</option>
+                <option value="13">Ramp 4</option><option value="14">Ramp 5</option><option value="15">Ramp 6</option>
+                <option value="16">Ramp 7</option><option value="17">Ramp 8</option><option value="18">Ramp 9</option>
+                <option value="19">Ramp 10</option><option value="20">Ramp 11</option><option value="21">Ramp 12</option>
+            </select>
+        </div>
     </div>
 
     <div class="hangar-label">
@@ -29,17 +44,14 @@
     </div>
 
     <div class="hangar-wrapper" id="hangar-frame">
-        <svg class="hangar-svg" viewBox="0 0 1100 1100" fill="none" xmlns="http://w3.org/2000/svg">
-            <!-- Background -->
-            <rect width="1100" height="1100" fill="#334155"/>
-
-            <!-- Main Hangar (100x100) -->
+        <svg class="hangar-svg" viewBox="0 0 1100 1150" fill="none" xmlns="http://w3.org/2000/svg">
+            <rect width="1100" height="1150" fill="#334155"/>
+            <!-- Hangar 100x100 -->
             <rect x="80" y="80" width="940" height="540" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
-
             <!-- Ramp -->
-            <rect x="80" y="640" width="940" height="320" fill="#475569" rx="8"/>
+            <rect x="80" y="640" width="940" height="380" fill="#475569" rx="8"/>
 
-            <!-- A-J Bays inside Hangar -->
+            <!-- A-J Bays -->
             <g><rect x="160" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="225" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">A</text></g>
             <g><rect x="320" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="385" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">B</text></g>
             <g><rect x="480" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="545" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">C</text></g>
@@ -53,23 +65,23 @@
             <g><rect x="220" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="285" y="525" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">I</text></g>
             <g><rect x="500" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="565" y="525" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">J</text></g>
 
-            <!-- 12 T-Shaped Ramp Spots -->
-            <g><rect x="140" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M175 680 L160 715 L190 715" fill="#e2e8f0"/><text x="175" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">1</text></g>
-            <g><rect x="230" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M265 680 L250 715 L280 715" fill="#e2e8f0"/><text x="265" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">2</text></g>
-            <g><rect x="320" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M355 680 L340 715 L370 715" fill="#e2e8f0"/><text x="355" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">3</text></g>
-            <g><rect x="410" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M445 680 L430 715 L460 715" fill="#e2e8f0"/><text x="445" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">4</text></g>
-            <g><rect x="500" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M535 680 L520 715 L550 715" fill="#e2e8f0"/><text x="535" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">5</text></g>
-            <g><rect x="590" y="680" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M625 680 L610 715 L640 715" fill="#e2e8f0"/><text x="625" y="800" fill="#e2e8f0" font-size="18" text-anchor="middle">6</text></g>
+            <!-- 12 Spaced T-Shaped Ramp Spots -->
+            <g><rect x="130" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M162 680 L150 715 L175 715" fill="#e2e8f0"/><text x="163" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">1</text></g>
+            <g><rect x="215" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M247 680 L235 715 L260 715" fill="#e2e8f0"/><text x="248" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">2</text></g>
+            <g><rect x="300" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M332 680 L320 715 L345 715" fill="#e2e8f0"/><text x="333" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">3</text></g>
+            <g><rect x="385" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M417 680 L405 715 L430 715" fill="#e2e8f0"/><text x="418" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">4</text></g>
+            <g><rect x="470" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M502 680 L490 715 L515 715" fill="#e2e8f0"/><text x="503" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">5</text></g>
+            <g><rect x="555" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M587 680 L575 715 L600 715" fill="#e2e8f0"/><text x="588" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">6</text></g>
+            <g><rect x="640" y="680" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M672 680 L660 715 L685 715" fill="#e2e8f0"/><text x="673" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">7</text></g>
 
-            <g><rect x="230" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M265 820 L250 855 L280 855" fill="#e2e8f0"/><text x="265" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">7</text></g>
-            <g><rect x="320" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M355 820 L340 855 L370 855" fill="#e2e8f0"/><text x="355" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">8</text></g>
-            <g><rect x="410" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M445 820 L430 855 L460 855" fill="#e2e8f0"/><text x="445" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">9</text></g>
-            <g><rect x="500" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M535 820 L520 855 L550 855" fill="#e2e8f0"/><text x="535" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">10</text></g>
-            <g><rect x="590" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M625 820 L610 855 L640 855" fill="#e2e8f0"/><text x="625" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">11</text></g>
-            <g><rect x="680" y="820" width="70" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M715 820 L700 855 L730 855" fill="#e2e8f0"/><text x="715" y="940" fill="#e2e8f0" font-size="18" text-anchor="middle">12</text></g>
+            <g><rect x="215" y="830" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M247 830 L235 865 L260 865" fill="#e2e8f0"/><text x="248" y="945" fill="#e2e8f0" font-size="18" text-anchor="middle">8</text></g>
+            <g><rect x="300" y="830" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M332 830 L320 865 L345 865" fill="#e2e8f0"/><text x="333" y="945" fill="#e2e8f0" font-size="18" text-anchor="middle">9</text></g>
+            <g><rect x="385" y="830" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M417 830 L405 865 L430 865" fill="#e2e8f0"/><text x="418" y="945" fill="#e2e8f0" font-size="18" text-anchor="middle">10</text></g>
+            <g><rect x="470" y="830" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M502 830 L490 865 L515 865" fill="#e2e8f0"/><text x="503" y="945" fill="#e2e8f0" font-size="18" text-anchor="middle">11</text></g>
+            <g><rect x="555" y="830" width="65" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M587 830 L575 865 L600 865" fill="#e2e8f0"/><text x="588" y="945" fill="#e2e8f0" font-size="18" text-anchor="middle">12</text></g>
         </svg>
 
-        <!-- Airplanes -->
+        <!-- Planes -->
         <div id="airplane1" class="airplane-container active">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
