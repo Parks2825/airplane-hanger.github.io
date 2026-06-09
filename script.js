@@ -1,8 +1,22 @@
 const hangar = document.getElementById('hangar-frame');
 
 const planes = [
-    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 420, y: 320, angle: 180, id: 'DA40-1' },
-    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 720, y: 380, angle: 180, id: 'DA40-2' }
+    {
+        el: document.getElementById('airplane1'),
+        visual: document.querySelector('#airplane1 .plane-visual'),
+        x: 420,
+        y: 320,
+        angle: 180,
+        id: 'DA40-1'
+    },
+    {
+        el: document.getElementById('airplane2'),
+        visual: document.querySelector('#airplane2 .plane-visual'),
+        x: 720,
+        y: 380,
+        angle: 180,
+        id: 'DA40-2'
+    }
 ];
 
 let selectedPlane = planes[0];
@@ -12,6 +26,7 @@ const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
+// Parking Spots - Coordinates matched to bays A-J in the picture
 const parkingSpots = [
     {x: 260, y: 195}, // A
     {x: 460, y: 195}, // B
@@ -25,7 +40,7 @@ const parkingSpots = [
     {x: 660, y: 675}  // J
 ];
 
-const snapThreshold = 70;
+const snapThreshold = 75;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -40,6 +55,7 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
+// Initialize
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', (e) => {
@@ -54,7 +70,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag
+// Drag System
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -72,8 +88,10 @@ document.addEventListener('mousemove', (e) => {
     const rect = hangar.getBoundingClientRect();
     currentDragPlane.x = e.clientX - rect.left;
     currentDragPlane.y = e.clientY - rect.top;
+
     currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
     currentDragPlane.y = Math.max(80, Math.min(currentDragPlane.y, rect.height - 100));
+
     updatePlane(currentDragPlane);
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
@@ -84,6 +102,7 @@ document.addEventListener('mouseup', () => {
 
     let closest = null;
     let minDist = Infinity;
+
     for (let spot of parkingSpots) {
         const dx = currentDragPlane.x - spot.x;
         const dy = currentDragPlane.y - spot.y;
@@ -97,7 +116,7 @@ document.addEventListener('mouseup', () => {
     if (closest && minDist < snapThreshold) {
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180;
+        currentDragPlane.angle = 180;   // Nose pointing down
         currentDragPlane.el.style.transition = 'all 0.4s ease-out';
     } else {
         currentDragPlane.el.style.transition = 'transform 0.15s';
@@ -119,20 +138,24 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// Dropdown
+// Dropdown Auto-Assign
 const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
     if (!spotDropdown.value) return;
+
     const spotIndex = parseInt(spotDropdown.value);
     const target = parkingSpots[spotIndex];
+
     if (target) {
         selectedPlane.x = target.x;
         selectedPlane.y = target.y;
         selectedPlane.angle = 180;
+
         updatePlane(selectedPlane);
         updateTelemetry();
+
         selectedPlane.el.style.transition = 'all 0.65s ease-out';
-        setTimeout(() => spotDropdown.value = '', 700);
+        setTimeout(() => { spotDropdown.value = ''; }, 700);
     }
 });
