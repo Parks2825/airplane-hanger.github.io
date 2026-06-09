@@ -19,24 +19,6 @@
         <div>DIMENSIONS: <span class="telemetry-highlight">100' × 100'</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
-        <div>X: <span id="telemetry-x" class="telemetry-highlight">—</span></div>
-        <div>Y: <span id="telemetry-y" class="telemetry-highlight">—</span></div>
-        
-        <div style="margin-top:12px; padding-top:8px; border-top:1px solid #334155;">
-            <strong>ASSIGN SPOT:</strong><br>
-            <select id="spot-assign" style="margin-top:6px; padding:6px; width:100%; background:#1e293b; color:#e2e8f0; border:1px solid #64748b; border-radius:6px;">
-                <option value="">Select Spot...</option>
-                <option value="0">A</option><option value="1">B</option><option value="2">C</option>
-                <option value="3">D</option><option value="4">E</option><option value="5">F</option>
-                <option value="6">G</option><option value="7">H</option><option value="8">I</option>
-                <option value="9">J</option>
-                <option value="10">Ramp 1</option><option value="11">Ramp 2</option><option value="12">Ramp 3</option>
-                <option value="13">Ramp 4</option><option value="14">Ramp 5</option><option value="15">Ramp 6</option>
-                <option value="16">Ramp 7</option><option value="17">Ramp 8</option><option value="18">Ramp 9</option>
-                <option value="19">Ramp 10</option><option value="20">Ramp 11</option><option value="21">Ramp 12</option>
-                <option value="22">Ramp 13</option><option value="23">Ramp 14</option><option value="24">Ramp 15</option>
-            </select>
-        </div>
     </div>
 
     <div class="hangar-label">
@@ -52,7 +34,7 @@
             <!-- Ramp -->
             <rect x="80" y="640" width="940" height="480" fill="#475569" rx="8"/>
 
-            <!-- A-J Bays -->
+            <!-- A-J Bays - Centered on snap points -->
             <g><rect x="160" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="225" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">A</text></g>
             <g><rect x="320" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="385" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">B</text></g>
             <g><rect x="480" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="545" y="205" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">C</text></g>
@@ -66,7 +48,7 @@
             <g><rect x="220" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="285" y="525" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">I</text></g>
             <g><rect x="500" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="565" y="525" fill="#e2e8f0" font-size="30" font-weight="bold" text-anchor="middle">J</text></g>
 
-            <!-- 15 Ramp Spots -->
+            <!-- 15 Ramp T-Spots - Perfectly centered on snap points -->
             <g><rect x="130" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M160 680 L148 715 L172 715" fill="#e2e8f0"/><text x="160" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">1</text></g>
             <g><rect x="205" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M235 680 L223 715 L247 715" fill="#e2e8f0"/><text x="235" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">2</text></g>
             <g><rect x="280" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M310 680 L298 715 L322 715" fill="#e2e8f0"/><text x="310" y="795" fill="#e2e8f0" font-size="18" text-anchor="middle">3</text></g>
@@ -85,8 +67,8 @@
             <g><rect x="655" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><path d="M685 860 L673 895 L697 895" fill="#e2e8f0"/><text x="685" y="975" fill="#e2e8f0" font-size="18" text-anchor="middle">15</text></g>
         </svg>
 
-        <!-- Planes on Ramp by default -->
-        <div id="airplane1" class="airplane-container active" style="left: 130px; top: 720px;">
+        <!-- Planes starting on ramp -->
+        <div id="airplane1" class="airplane-container active" style="left: 75px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff"/>
@@ -96,7 +78,7 @@
             <div class="plane-text-block">DA40-1</div>
         </div>
 
-        <div id="airplane2" class="airplane-container" style="left: 235px; top: 720px;">
+        <div id="airplane2" class="airplane-container" style="left: 190px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc"/>
