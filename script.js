@@ -34,9 +34,9 @@ function updateTelemetry() {
 }
 
 function updatePlane(plane) {
-    // Main landing gear offset: shifted down from geometric center
+    // Center of airplane
     plane.el.style.left = (plane.x - 85) + 'px';
-    plane.el.style.top = (plane.y - 45) + 'px';   // ← Changed for landing gear
+    plane.el.style.top = (plane.y - 72) + 'px';   // ← Centered vertically
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
@@ -53,7 +53,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag System (unchanged)
+// Drag System
 let isDragging = false;
 let currentDragPlane = null;
 
