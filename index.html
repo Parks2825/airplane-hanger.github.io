@@ -16,7 +16,7 @@
     <div class="hangar-telemetry-box">
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color:#22c55e">OPEN</span></div>
-        <div>DIMENSIONS: <span class="telemetry-highlight">FL9: 100'×120' + Offices 20'</span></div>
+        <div>DIMENSIONS: <span class="telemetry-highlight">100' × 120'</span></div>
         <div>PARKING SPOTS: <span class="telemetry-highlight">11</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
@@ -44,28 +44,29 @@
 
     <div class="hangar-label">
         FL9<br>
-        <span class="hangar-subtitle">DIAMOND DA40 HANGAR + OFFICES</span>
+        <span class="hangar-subtitle">DIAMOND DA40 HANGAR • 100' × 120'</span>
     </div>
 
     <div class="hangar-wrapper" id="hangar-frame">
-        <svg class="hangar-svg" viewBox="0 0 1320 1000" fill="none" xmlns="http://w3.org/2000/svg">
+        <svg class="hangar-svg" viewBox="0 0 1200 1000" fill="none" xmlns="http://w3.org/2000/svg">
             <!-- Main Floor -->
-            <rect x="0" y="0" width="1320" height="1000" fill="#334155" />
+            <rect x="0" y="0" width="1200" height="1000" fill="#334155" />
 
-            <!-- FL9 Hangar Area (100' x 120') -->
+            <!-- FL9 Main Hangar Area -->
             <rect x="80" y="60" width="1040" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="8" rx="8" />
 
-            <!-- Offices on Right Side (100' depth x 20' width) -->
-            <rect x="1145" y="60" width="130" height="490" fill="#cbd5e1" stroke="#1e293b" stroke-width="8" rx="8" />
-            <text x="1210" y="110" text-anchor="middle" fill="#0f172a" font-size="24" font-weight="bold">OFFICES</text>
-            <text x="1210" y="140" text-anchor="middle" fill="#334155" font-size="14">20' WIDE</text>
+            <!-- Offices Inside FL9 (Right Side) -->
+            <rect x="980" y="80" width="120" height="450" fill="#cbd5e1" stroke="#1e293b" stroke-width="6" rx="6" />
+            <text x="1040" y="120" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="bold">OFFICES</text>
+            <text x="1040" y="145" text-anchor="middle" fill="#334155" font-size="13">20' WIDE</text>
 
-            <!-- Office internal walls -->
-            <rect x="1145" y="220" width="130" height="6" fill="#1e293b" />
-            <rect x="1145" y="340" width="130" height="6" fill="#1e293b" />
-            <rect x="1145" y="440" width="130" height="6" fill="#1e293b" />
+            <!-- Office internal dividers -->
+            <rect x="980" y="200" width="120" height="6" fill="#1e293b" />
+            <rect x="980" y="300" width="120" height="6" fill="#1e293b" />
+            <rect x="980" y="400" width="120" height="6" fill="#1e293b" />
 
-            <!-- 11 Parking Spots -->
+            <!-- 11 Parking Spots (All inside main area) -->
+            <!-- Row 1 -->
             <g>
                 <rect x="145" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
                 <path d="M160 190 L145 205 L160 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
@@ -107,6 +108,7 @@
                 <text x="737" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">5</text>
             </g>
 
+            <!-- Row 2 -->
             <g>
                 <rect x="200" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
                 <path d="M215 395 L200 410 L215 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
@@ -140,6 +142,7 @@
                 <text x="672" y="470" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">9</text>
             </g>
 
+            <!-- Row 3 -->
             <g>
                 <rect x="255" y="490" width="115" height="165" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
                 <path d="M272 535 L250 555 L272 575" fill="none" stroke="#e2e8f0" stroke-width="4"/>
@@ -158,9 +161,9 @@
             </g>
 
             <!-- Walls -->
-            <rect x="70" y="50" width="1205" height="14" fill="#0f172a" />
+            <rect x="70" y="50" width="1060" height="14" fill="#0f172a" />
             <rect x="70" y="50" width="14" height="510" fill="#0f172a" />
-            <rect x="1246" y="50" width="14" height="510" fill="#0f172a" />
+            <rect x="1116" y="50" width="14" height="510" fill="#0f172a" />
         </svg>
 
         <!-- Planes -->
