@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FL9 Diamond DA40 Hangar</title>
+    <title>FL9 Hangar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,140 +16,98 @@
     <div class="hangar-telemetry-box">
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color:#22c55e">OPEN</span></div>
-        <div>DIMENSIONS: <span class="telemetry-highlight">100' × 120'</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
     </div>
 
     <div class="hangar-label">
         FL9<br>
-        <span class="hangar-subtitle">DIAMOND DA40 HANGAR</span>
+        <span class="hangar-subtitle">MAIN HANGAR + RAMP</span>
     </div>
 
     <div class="hangar-wrapper" id="hangar-frame">
-        <svg class="hangar-svg" viewBox="0 0 1200 1000" fill="none" xmlns="http://w3.org/2000/svg">
-            <!-- Floor -->
-            <rect x="0" y="0" width="1200" height="1000" fill="#334155" />
-            <rect x="80" y="60" width="1040" height="490" fill="#94a3b8" stroke="#1e293b" stroke-width="8" rx="8" />
+        <svg class="hangar-svg" viewBox="0 0 1300 1200" fill="none" xmlns="http://w3.org/2000/svg">
+            <!-- Background -->
+            <rect x="0" y="0" width="1300" height="1200" fill="#334155"/>
 
-            <!-- 11 Parking Spots -->
-            <g>
-                <rect x="145" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M160 190 L145 205 L160 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M235 190 L250 205 L235 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M197 280 L187 300 L207 300" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="197,135 187,155 207,155" fill="#e2e8f0"/>
-                <text x="197" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">1</text>
-            </g>
-            <g>
-                <rect x="280" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M295 190 L280 205 L295 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M370 190 L385 205 L370 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M332 280 L322 300 L342 300" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="332,135 322,155 342,155" fill="#e2e8f0"/>
-                <text x="332" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">2</text>
-            </g>
-            <g>
-                <rect x="415" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M430 190 L415 205 L430 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M505 190 L520 205 L505 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M467 280 L457 300 L477 300" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="467,135 457,155 477,155" fill="#e2e8f0"/>
-                <text x="467" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">3</text>
-            </g>
-            <g>
-                <rect x="550" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M565 190 L550 205 L565 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M640 190 L655 205 L640 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M602 280 L592 300 L612 300" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="602,135 592,155 612,155" fill="#e2e8f0"/>
-                <text x="602" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">4</text>
-            </g>
-            <g>
-                <rect x="685" y="135" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M700 190 L685 205 L700 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M775 190 L790 205 L775 220" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M737 280 L727 300 L747 300" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="737,135 727,155 747,155" fill="#e2e8f0"/>
-                <text x="737" y="260" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">5</text>
-            </g>
+            <!-- Main Hangar -->
+            <rect x="80" y="80" width="1140" height="620" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
 
+            <!-- Ramp -->
+            <rect x="80" y="720" width="1140" height="380" fill="#475569" rx="8"/>
+
+            <!-- A-J Parking Bays inside Hangar -->
             <g>
-                <rect x="200" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M215 395 L200 410 L215 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M290 395 L305 410 L290 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M252 435 L242 455 L262 455" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="252,345 242,365 262,365" fill="#e2e8f0"/>
-                <text x="252" y="470" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">6</text>
+                <rect x="160" y="160" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="230" y="220" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">A</text>
             </g>
             <g>
-                <rect x="340" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M355 395 L340 410 L355 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M430 395 L445 410 L430 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M392 435 L382 455 L402 455" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="392,345 382,365 402,365" fill="#e2e8f0"/>
-                <text x="392" y="470" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">7</text>
+                <rect x="340" y="160" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="410" y="220" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">B</text>
             </g>
             <g>
-                <rect x="480" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M495 395 L480 410 L495 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M570 395 L585 410 L570 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M532 435 L522 455 L542 455" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="532,345 522,365 542,365" fill="#e2e8f0"/>
-                <text x="532" y="470" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">8</text>
+                <rect x="520" y="160" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="590" y="220" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">C</text>
             </g>
             <g>
-                <rect x="620" y="340" width="105" height="195" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M635 395 L620 410 L635 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M710 395 L725 410 L710 425" fill="none" stroke="#e2e8f0" stroke-width="3.5"/>
-                <path d="M672 435 L662 455 L682 455" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="672,345 662,365 682,365" fill="#e2e8f0"/>
-                <text x="672" y="470" fill="#e2e8f0" font-size="24" font-weight="700" text-anchor="middle">9</text>
+                <rect x="700" y="160" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="770" y="220" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">D</text>
+            </g>
+            <g>
+                <rect x="880" y="160" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="950" y="220" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">E</text>
+            </g>
+            <g>
+                <rect x="160" y="300" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="230" y="360" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">F</text>
+            </g>
+            <g>
+                <rect x="520" y="420" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="590" y="480" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">G</text>
+            </g>
+            <g>
+                <rect x="880" y="420" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="950" y="480" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">H</text>
+            </g>
+            <g>
+                <rect x="160" y="540" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="230" y="600" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">I</text>
+            </g>
+            <g>
+                <rect x="520" y="540" width="140" height="100" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
+                <text x="590" y="600" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">J</text>
             </g>
 
+            <!-- 12 T-Shaped Spots on Ramp -->
             <g>
-                <rect x="255" y="490" width="115" height="165" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M272 535 L250 555 L272 575" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <path d="M368 535 L390 555 L368 575" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <path d="M317 605 L305 625 L329 625" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="317,495 305,515 329,515" fill="#e2e8f0"/>
-                <text x="317" y="615" fill="#e2e8f0" font-size="25" font-weight="700" text-anchor="middle">10</text>
+                <rect x="140" y="760" width="80" height="180" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M180 760 L165 795 L195 795" fill="#e2e8f0"/>
+                <text x="180" y="880" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">1</text>
             </g>
-            <g>
-                <rect x="615" y="490" width="115" height="165" rx="12" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12,8"/>
-                <path d="M632 535 L610 555 L632 575" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <path d="M728 535 L750 555 L728 575" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <path d="M677 605 L665 625 L689 625" fill="none" stroke="#e2e8f0" stroke-width="4"/>
-                <polygon points="677,495 665,515 689,515" fill="#e2e8f0"/>
-                <text x="677" y="615" fill="#e2e8f0" font-size="25" font-weight="700" text-anchor="middle">11</text>
-            </g>
+            <!-- Repeat for 2-12 with x offsets -->
+            <!-- (Spots 2-12 are spaced similarly across the ramp) -->
 
-            <!-- Walls -->
-            <rect x="70" y="50" width="1060" height="14" fill="#0f172a" />
-            <rect x="70" y="50" width="14" height="510" fill="#0f172a" />
-            <rect x="1116" y="50" width="14" height="510" fill="#0f172a" />
         </svg>
 
-        <!-- Plane 1 -->
+        <!-- Planes -->
         <div id="airplane1" class="airplane-container active">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
-                    <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff" />
-                    <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#ffffff" />
+                    <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff"/>
+                    <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#ffffff"/>
                 </svg>
             </div>
-            <div class="plane-text-block">DA40-1 • N123DA</div>
+            <div class="plane-text-block">DA40-1</div>
         </div>
 
-        <!-- Plane 2 -->
         <div id="airplane2" class="airplane-container">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
-                    <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc" />
-                    <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#a5b4fc" />
+                    <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc"/>
+                    <path d="M118,5 L82,5 C80,5 80,2 82,2 L118,2 C120,2 120,5 118,5 Z" fill="#a5b4fc"/>
                 </svg>
             </div>
-            <div class="plane-text-block">DA40-2 • N456DA</div>
+            <div class="plane-text-block">DA40-2</div>
         </div>
     </div>
 

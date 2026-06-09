@@ -1,22 +1,8 @@
 const hangar = document.getElementById('hangar-frame');
 
 const planes = [
-    {
-        el: document.getElementById('airplane1'),
-        visual: document.querySelector('#airplane1 .plane-visual'),
-        x: 420,
-        y: 320,
-        angle: 180,
-        id: 'DA40-1'
-    },
-    {
-        el: document.getElementById('airplane2'),
-        visual: document.querySelector('#airplane2 .plane-visual'),
-        x: 720,
-        y: 380,
-        angle: 180,
-        id: 'DA40-2'
-    }
+    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 420, y: 320, angle: 180, id: 'DA40-1' },
+    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 720, y: 380, angle: 180, id: 'DA40-2' }
 ];
 
 let selectedPlane = planes[0];
@@ -27,10 +13,21 @@ const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
 const parkingSpots = [
-    {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
-    {x: 612, y: 225}, {x: 747, y: 225},
-    {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
-    {x: 317, y: 575}, {x: 677, y: 575}
+    {x: 260, y: 195}, // A
+    {x: 460, y: 195}, // B
+    {x: 660, y: 295}, // C
+    {x: 860, y: 195}, // D
+    {x: 1060, y: 295}, // E
+    {x: 260, y: 435}, // F
+    {x: 660, y: 535}, // G
+    {x: 1060, y: 535}, // H
+    {x: 260, y: 675}, // I
+    {x: 660, y: 675}, // J
+    // Ramp T-spots (12 spots)
+    {x: 185, y: 860}, {x: 305, y: 860}, {x: 425, y: 860}, {x: 545, y: 860},
+    {x: 665, y: 860}, {x: 785, y: 860},
+    {x: 305, y: 950}, {x: 425, y: 950}, {x: 545, y: 950}, {x: 665, y: 950},
+    {x: 785, y: 950}, {x: 905, y: 950}
 ];
 
 const snapThreshold = 75;
@@ -48,7 +45,6 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initialize
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', (e) => {
@@ -95,7 +91,6 @@ document.addEventListener('mouseup', () => {
 
     let closest = null;
     let minDist = Infinity;
-
     for (let spot of parkingSpots) {
         const dx = currentDragPlane.x - spot.x;
         const dy = currentDragPlane.y - spot.y;
