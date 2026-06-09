@@ -12,24 +12,19 @@ const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
-// Improved snap points - centered in each box
 const parkingSpots = [
-    // A-J inside hangar (centered)
-    {x: 225, y: 195}, {x: 385, y: 195}, {x: 545, y: 195}, 
-    {x: 705, y: 195}, {x: 865, y: 195},
+    // A-J
+    {x: 225, y: 195}, {x: 385, y: 195}, {x: 545, y: 195}, {x: 705, y: 195}, {x: 865, y: 195},
     {x: 285, y: 355}, {x: 565, y: 355}, {x: 845, y: 355},
     {x: 285, y: 515}, {x: 565, y: 515},
-    
-    // 15 Ramp T-spots (centered)
-    {x: 160, y: 765}, {x: 235, y: 765}, {x: 310, y: 765}, 
-    {x: 385, y: 765}, {x: 460, y: 765}, {x: 535, y: 765}, 
-    {x: 610, y: 765}, {x: 685, y: 765},
-    {x: 235, y: 945}, {x: 310, y: 945}, {x: 385, y: 945}, 
-    {x: 460, y: 945}, {x: 535, y: 945}, {x: 610, y: 945}, 
-    {x: 685, y: 945}
+    // 15 Ramp Spots
+    {x: 160, y: 765}, {x: 235, y: 765}, {x: 310, y: 765}, {x: 385, y: 765},
+    {x: 460, y: 765}, {x: 535, y: 765}, {x: 610, y: 765}, {x: 685, y: 765},
+    {x: 235, y: 945}, {x: 310, y: 945}, {x: 385, y: 945}, {x: 460, y: 945},
+    {x: 535, y: 945}, {x: 610, y: 945}, {x: 685, y: 945}
 ];
 
-const snapThreshold = 85;   // Slightly larger for easier snapping
+const snapThreshold = 85;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -39,8 +34,9 @@ function updateTelemetry() {
 }
 
 function updatePlane(plane) {
+    // Main landing gear offset: shifted down from geometric center
     plane.el.style.left = (plane.x - 85) + 'px';
-    plane.el.style.top = (plane.y - 70) + 'px';
+    plane.el.style.top = (plane.y - 45) + 'px';   // ← Changed for landing gear
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
@@ -57,7 +53,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag System
+// Drag System (unchanged)
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -98,7 +94,7 @@ document.addEventListener('mouseup', () => {
     }
 
     if (closest && minDist < snapThreshold) {
-        currentDragPlane.x = closest.x;   // Snap to exact center
+        currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
         currentDragPlane.angle = 180;
         currentDragPlane.el.style.transition = 'all 0.45s ease-out';
