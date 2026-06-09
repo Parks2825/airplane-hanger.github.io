@@ -26,7 +26,7 @@ const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
-// Parking Spots - Coordinates matched to bays A-J in the picture
+// Precise snap points matching the A-J boxes
 const parkingSpots = [
     {x: 260, y: 195}, // A
     {x: 460, y: 195}, // B
@@ -40,7 +40,7 @@ const parkingSpots = [
     {x: 660, y: 675}  // J
 ];
 
-const snapThreshold = 75;
+const snapThreshold = 85;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -78,8 +78,10 @@ document.addEventListener('mousedown', (e) => {
     const planeEl = e.target.closest('.airplane-container');
     if (planeEl) {
         currentDragPlane = planes.find(p => p.el === planeEl);
-        isDragging = true;
-        currentDragPlane.el.style.transition = 'none';
+        if (currentDragPlane) {
+            isDragging = true;
+            currentDragPlane.el.style.transition = 'none';
+        }
     }
 });
 
@@ -116,8 +118,8 @@ document.addEventListener('mouseup', () => {
     if (closest && minDist < snapThreshold) {
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180;   // Nose pointing down
-        currentDragPlane.el.style.transition = 'all 0.4s ease-out';
+        currentDragPlane.angle = 180;   // Nose down
+        currentDragPlane.el.style.transition = 'all 0.45s ease-out';
     } else {
         currentDragPlane.el.style.transition = 'transform 0.15s';
     }
@@ -143,19 +145,15 @@ const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
     if (!spotDropdown.value) return;
-
     const spotIndex = parseInt(spotDropdown.value);
     const target = parkingSpots[spotIndex];
-
     if (target) {
         selectedPlane.x = target.x;
         selectedPlane.y = target.y;
         selectedPlane.angle = 180;
-
         updatePlane(selectedPlane);
         updateTelemetry();
-
         selectedPlane.el.style.transition = 'all 0.65s ease-out';
-        setTimeout(() => { spotDropdown.value = ''; }, 700);
+        setTimeout(() => spotDropdown.value = '', 700);
     }
 });
