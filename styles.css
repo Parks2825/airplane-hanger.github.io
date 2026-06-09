@@ -1,4 +1,8 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
 body {
     width: 100vw;
@@ -23,7 +27,11 @@ body {
     border-radius: 12px;
 }
 
-.hangar-svg { width: 100%; height: 100%; pointer-events: none; }
+.hangar-svg { 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+}
 
 .hangar-label {
     position: absolute;
@@ -46,7 +54,13 @@ body {
     pointer-events: none;
 }
 
-.hangar-subtitle { display: block; font-size: 16px; letter-spacing: 4px; margin-top: 6px; color: #94a3b8; }
+.hangar-subtitle { 
+    display: block; 
+    font-size: 16px; 
+    letter-spacing: 4px; 
+    margin-top: 6px; 
+    color: #94a3b8; 
+}
 
 .hangar-telemetry-box {
     position: absolute;
@@ -65,7 +79,10 @@ body {
     line-height: 1.6;
 }
 
-.telemetry-highlight { color: #38bdf8; font-weight: bold; }
+.telemetry-highlight { 
+    color: #38bdf8; 
+    font-weight: bold; 
+}
 
 .instructions {
     position: absolute;
@@ -89,6 +106,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* transition overrides are cleanly injected by JS */
 }
 
 .airplane-container.active {
@@ -117,5 +135,4 @@ body {
     margin-top: 6px;
     white-space: nowrap;
     pointer-events: none;
-    transform: rotate(0deg) !important;
 }
