@@ -106,7 +106,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* transition overrides are cleanly injected by JS */
 }
 
 .airplane-container.active {
@@ -135,4 +134,32 @@ body {
     margin-top: 6px;
     white-space: nowrap;
     pointer-events: none;
+}
+
+/* Background Spot Layout Indicators */
+.map-spot-indicator {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 2px dashed rgba(56, 189, 248, 0.4);
+    border-radius: 50%;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.map-spot-label {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    color: #64748b;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 1px 6px;
+    border: 1px solid #1e293b;
+    border-radius: 4px;
+    white-space: nowrap;
 }
