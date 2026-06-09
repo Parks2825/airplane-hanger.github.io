@@ -24,7 +24,7 @@ const parkingSpots = [
     {x: 535, y: 945}, {x: 610, y: 945}, {x: 685, y: 945}
 ];
 
-const snapThreshold = 85;
+const snapThreshold = 20;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
