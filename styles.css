@@ -1,121 +1,136 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+const hangar = document.getElementById('hangar-frame');
 
-body {
-    width: 100vw;
-    min-height: 100vh;
-    background: #0f172a;
-    overflow: auto;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    position: relative;
-    user-select: none;
-    padding: 20px;
+const planes = [
+    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 420, y: 320, angle: 180, id: 'DA40-1' },
+    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 720, y: 380, angle: 180, id: 'DA40-2' }
+];
+
+let selectedPlane = planes[0];
+
+const rotDisplay = document.getElementById('telemetry-rot');
+const xDisplay = document.getElementById('telemetry-x');
+const yDisplay = document.getElementById('telemetry-y');
+const selectedDisplay = document.getElementById('selected-plane');
+
+// Snap points for 10 T-shaped ramp spots
+const parkingSpots = [
+    {x: 185, y: 860}, {x: 305, y: 860}, {x: 425, y: 860},
+    {x: 545, y: 860}, {x: 665, y: 860},
+    {x: 305, y: 920}, {x: 425, y: 920}, {x: 545, y: 920},
+    {x: 665, y: 920}, {x: 785, y: 920}
+];
+
+const snapThreshold = 80;
+
+function updateTelemetry() {
+    selectedDisplay.textContent = selectedPlane.id;
+    rotDisplay.textContent = Math.round(selectedPlane.angle) + '°';
+    xDisplay.textContent = Math.round(selectedPlane.x) + 'px';
+    yDisplay.textContent = Math.round(selectedPlane.y) + 'px';
 }
 
-.hangar-wrapper {
-    position: relative;
-    margin: 100px auto 80px;
-    width: 1250px;
-    height: 880px;
-    background: #1e293b;
-    box-shadow: 0 15px 60px rgba(0,0,0,0.8);
-    overflow: hidden;
-    border: 14px solid #0f172a;
-    border-radius: 12px;
+function updatePlane(plane) {
+    plane.el.style.left = (plane.x - 85) + 'px';
+    plane.el.style.top = (plane.y - 70) + 'px';
+    plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-.hangar-svg { width: 100%; height: 100%; pointer-events: none; }
+// Initialize
+planes.forEach(plane => {
+    updatePlane(plane);
+    plane.el.addEventListener('mousedown', (e) => {
+        if (e.detail === 1) {
+            selectedPlane = plane;
+            planes.forEach(p => p.el.classList.remove('active'));
+            plane.el.classList.add('active');
+            updateTelemetry();
+        }
+    });
+});
 
-.hangar-label {
-    position: absolute;
-    top: 35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(180deg, #1e2937, #0f172a);
-    color: #e2e8f0;
-    font-family: monospace;
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 8px;
-    padding: 12px 80px;
-    border: 4px solid #64748b;
-    border-radius: 8px;
-    text-align: center;
-    text-transform: uppercase;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.7);
-    z-index: 30;
-    pointer-events: none;
+updateTelemetry();
+
+// Drag
+let isDragging = false;
+let currentDragPlane = null;
+
+document.addEventListener('mousedown', (e) => {
+    const planeEl = e.target.closest('.airplane-container');
+    if (planeEl) {
+        currentDragPlane = planes.find(p => p.el === planeEl);
+        isDragging = true;
+        currentDragPlane.el.style.transition = 'none';
+    }
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging || !currentDragPlane) return;
+    const rect = hangar.getBoundingClientRect();
+    currentDragPlane.x = e.clientX - rect.left;
+    currentDragPlane.y = e.clientY - rect.top;
+
+    currentDragPlane.x = Math.max(80, Math.min(currentDragPlane.x, rect.width - 80));
+    currentDragPlane.y = Math.max(80, Math.min(currentDragPlane.y, rect.height - 100));
+
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
+});
+
+document.addEventListener('mouseup', () => {
+    if (!isDragging || !currentDragPlane) return;
+    isDragging = false;
+
+    let closest = null;
+    let minDist = Infinity;
+    for (let spot of parkingSpots) {
+        const dx = currentDragPlane.x - spot.x;
+        const dy = currentDragPlane.y - spot.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < minDist) {
+            minDist = dist;
+            closest = spot;
+        }
+    }
+
+    if (closest && minDist < snapThreshold) {
+        currentDragPlane.x = closest.x;
+        currentDragPlane.y = closest.y;
+        currentDragPlane.angle = 0;   // Nose pointing forward on ramp
+        currentDragPlane.el.style.transition = 'all 0.4s ease-out';
+    } else {
+        currentDragPlane.el.style.transition = 'transform 0.15s';
+    }
+
+    updatePlane(currentDragPlane);
+    if (currentDragPlane === selectedPlane) updateTelemetry();
+});
+
+// Keyboard Rotation
+function rotate(degrees) {
+    selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
+    updatePlane(selectedPlane);
+    updateTelemetry();
 }
 
-.hangar-subtitle { display: block; font-size: 16px; letter-spacing: 4px; margin-top: 6px; color: #94a3b8; }
+document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') rotate(-15);
+    if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
+});
 
-.hangar-telemetry-box {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(15,23,42,0.95);
-    border: 1px solid #334155;
-    border-left: 5px solid #38bdf8;
-    padding: 14px 18px;
-    border-radius: 8px;
-    color: #94a3b8;
-    font-size: 12.5px;
-    font-family: monospace;
-    z-index: 25;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    line-height: 1.6;
-}
+// Dropdown
+const spotDropdown = document.getElementById('spot-assign');
 
-.telemetry-highlight { color: #38bdf8; font-weight: bold; }
-
-.instructions {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(15,23,42,0.9);
-    padding: 12px 18px;
-    border-radius: 12px;
-    color: #f8fafc;
-    font-size: 14px;
-    z-index: 20;
-    border: 1px solid #334155;
-}
-
-.airplane-container {
-    position: absolute;
-    width: 170px;
-    height: 145px;
-    cursor: grab;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.airplane-container.active {
-    filter: drop-shadow(0 0 25px #38bdf8);
-    z-index: 20;
-}
-
-.plane-visual {
-    transform: rotate(var(--plane-angle, 0deg));
-    transition: transform 0.2s ease-out;
-}
-
-.plane-visual svg {
-    width: 150px;
-    height: 110px;
-}
-
-.plane-text-block {
-    background: #0f172a;
-    color: #f8fafc;
-    font-size: 10.5px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 4px;
-    border: 1px solid #475569;
-    margin-top: 6px;
-    white-space: nowrap;
-    pointer-events: none;
-    transform: rotate(0deg) !important;
-}
+spotDropdown.addEventListener('change', () => {
+    if (!spotDropdown.value) return;
+    const spotIndex = parseInt(spotDropdown.value);
+    const target = parkingSpots[spotIndex];
+    if (target) {
+        selectedPlane.x = target.x;
+        selectedPlane.y = target.y;
+        selectedPlane.angle = 0;
+        updatePlane(selectedPlane);
+        updateTelemetry();
+        selectedPlane.el.style.transition = 'all 0.65s ease-out';
+        setTimeout(() => spotDropdown.value = '', 700);
+    }
+});

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FL9 Hangar - Bay Layout</title>
+    <title>FL9 Hangar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <div class="instructions">
         🛩️ Click a plane to select • Drag to move<br>
-        A / D or Arrow Keys to rotate • Dropdown to assign bay
+        A / D or Arrow Keys to rotate • Dropdown to assign spot
     </div>
 
     <div class="hangar-telemetry-box">
@@ -18,81 +18,79 @@
         <div>BAYS STATUS: <span style="color:#22c55e">OPEN</span></div>
         <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
-        <div>X: <span id="telemetry-x" class="telemetry-highlight">500px</span></div>
-        <div>Y: <span id="telemetry-y" class="telemetry-highlight">400px</span></div>
-        
-        <div style="margin-top:12px; padding-top:8px; border-top:1px solid #334155;">
-            <strong>ASSIGN BAY:</strong><br>
-            <select id="spot-assign" style="margin-top:6px; padding:6px; width:100%; background:#1e293b; color:#e2e8f0; border:1px solid #64748b; border-radius:6px;">
-                <option value="">Select Bay...</option>
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-                <option value="4">E</option>
-                <option value="5">F</option>
-                <option value="6">G</option>
-                <option value="7">H</option>
-                <option value="8">I</option>
-                <option value="9">J</option>
-            </select>
-        </div>
     </div>
 
     <div class="hangar-label">
         FL9<br>
-        <span class="hangar-subtitle">BAY LAYOUT</span>
+        <span class="hangar-subtitle">MAIN HANGAR + RAMP</span>
     </div>
 
     <div class="hangar-wrapper" id="hangar-frame">
-        <svg class="hangar-svg" viewBox="0 0 1300 900" fill="none" xmlns="http://w3.org/2000/svg">
-            <rect x="0" y="0" width="1300" height="900" fill="#334155"/>
+        <svg class="hangar-svg" viewBox="0 0 1300 1150" fill="none" xmlns="http://w3.org/2000/svg">
+            <!-- Main Floor -->
+            <rect x="0" y="0" width="1300" height="1150" fill="#334155"/>
+
+            <!-- Hangar Building -->
             <rect x="80" y="80" width="1140" height="620" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
 
-            <!-- 10 Bays matching picture layout -->
+            <!-- Ramp Area -->
+            <rect x="80" y="720" width="1140" height="320" fill="#475569" rx="8"/>
+
+            <!-- 10 T-Shaped Parking Spots on Ramp -->
             <g>
-                <rect x="180" y="140" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="260" y="200" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">A</text>
+                <rect x="140" y="760" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M185 760 L170 800 L200 800" fill="#e2e8f0"/>
+                <text x="185" y="900" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">1</text>
             </g>
             <g>
-                <rect x="380" y="140" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="460" y="200" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">B</text>
+                <rect x="260" y="760" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M305 760 L290 800 L320 800" fill="#e2e8f0"/>
+                <text x="305" y="900" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">2</text>
             </g>
             <g>
-                <rect x="580" y="240" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="660" y="300" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">C</text>
+                <rect x="380" y="760" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M425 760 L410 800 L440 800" fill="#e2e8f0"/>
+                <text x="425" y="900" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">3</text>
             </g>
             <g>
-                <rect x="780" y="140" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="860" y="200" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">D</text>
+                <rect x="500" y="760" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M545 760 L530 800 L560 800" fill="#e2e8f0"/>
+                <text x="545" y="900" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">4</text>
             </g>
             <g>
-                <rect x="980" y="240" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="1060" y="300" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">E</text>
+                <rect x="620" y="760" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M665 760 L650 800 L680 800" fill="#e2e8f0"/>
+                <text x="665" y="900" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">5</text>
+            </g>
+
+            <g>
+                <rect x="260" y="820" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M305 820 L290 860 L320 860" fill="#e2e8f0"/>
+                <text x="305" y="960" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">6</text>
             </g>
             <g>
-                <rect x="180" y="380" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="260" y="440" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">F</text>
+                <rect x="380" y="820" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M425 820 L410 860 L440 860" fill="#e2e8f0"/>
+                <text x="425" y="960" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">7</text>
             </g>
             <g>
-                <rect x="580" y="480" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="660" y="540" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">G</text>
+                <rect x="500" y="820" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M545 820 L530 860 L560 860" fill="#e2e8f0"/>
+                <text x="545" y="960" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">8</text>
             </g>
             <g>
-                <rect x="980" y="480" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="1060" y="540" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">H</text>
+                <rect x="620" y="820" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M665 820 L650 860 L680 860" fill="#e2e8f0"/>
+                <text x="665" y="960" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">9</text>
             </g>
             <g>
-                <rect x="180" y="620" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="260" y="680" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">I</text>
-            </g>
-            <g>
-                <rect x="580" y="620" width="160" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="8"/>
-                <text x="660" y="680" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">J</text>
+                <rect x="740" y="820" width="90" height="200" rx="8" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-dasharray="10,6"/>
+                <path d="M785 820 L770 860 L800 860" fill="#e2e8f0"/>
+                <text x="785" y="960" fill="#e2e8f0" font-size="22" font-weight="bold" text-anchor="middle">10</text>
             </g>
         </svg>
 
-        <!-- Plane 1 -->
+        <!-- Planes -->
         <div id="airplane1" class="airplane-container active">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://w3.org/2000/svg">
