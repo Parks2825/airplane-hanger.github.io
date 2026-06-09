@@ -26,21 +26,14 @@ const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
-// Precise snap points matching the A-J boxes
 const parkingSpots = [
-    {x: 260, y: 195}, // A
-    {x: 460, y: 195}, // B
-    {x: 660, y: 295}, // C
-    {x: 860, y: 195}, // D
-    {x: 1060, y: 295}, // E
-    {x: 260, y: 435}, // F
-    {x: 660, y: 535}, // G
-    {x: 1060, y: 535}, // H
-    {x: 260, y: 675}, // I
-    {x: 660, y: 675}  // J
+    {x: 207, y: 225}, {x: 342, y: 225}, {x: 477, y: 225},
+    {x: 612, y: 225}, {x: 747, y: 225},
+    {x: 252, y: 400}, {x: 392, y: 400}, {x: 532, y: 400}, {x: 672, y: 400},
+    {x: 317, y: 575}, {x: 677, y: 575}
 ];
 
-const snapThreshold = 85;
+const snapThreshold = 75;
 
 function updateTelemetry() {
     selectedDisplay.textContent = selectedPlane.id;
@@ -78,10 +71,8 @@ document.addEventListener('mousedown', (e) => {
     const planeEl = e.target.closest('.airplane-container');
     if (planeEl) {
         currentDragPlane = planes.find(p => p.el === planeEl);
-        if (currentDragPlane) {
-            isDragging = true;
-            currentDragPlane.el.style.transition = 'none';
-        }
+        isDragging = true;
+        currentDragPlane.el.style.transition = 'none';
     }
 });
 
@@ -118,8 +109,8 @@ document.addEventListener('mouseup', () => {
     if (closest && minDist < snapThreshold) {
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180;   // Nose down
-        currentDragPlane.el.style.transition = 'all 0.45s ease-out';
+        currentDragPlane.angle = 180;
+        currentDragPlane.el.style.transition = 'all 0.4s ease-out';
     } else {
         currentDragPlane.el.style.transition = 'transform 0.15s';
     }
@@ -140,7 +131,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// Dropdown Auto-Assign
+// Dropdown
 const spotDropdown = document.getElementById('spot-assign');
 
 spotDropdown.addEventListener('change', () => {
