@@ -35,8 +35,8 @@ function updateTelemetry() {
 
 function updatePlane(plane) {
     // Center of airplane
-    plane.el.style.left = (plane.x - 80) + 'px';
-    plane.el.style.top = (plane.y - 70) + 'px';   // ← Centered vertically
+    plane.el.style.left = (plane.x - 70) + 'px';
+    plane.el.style.top = (plane.y - 60) + 'px';   // ← Centered vertically
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
