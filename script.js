@@ -17,11 +17,11 @@ const parkingSpots = [
     {x: 225, y: 195}, {x: 385, y: 195}, {x: 545, y: 195}, {x: 705, y: 195}, {x: 865, y: 195},
     {x: 285, y: 355}, {x: 565, y: 355}, {x: 845, y: 355},
     {x: 285, y: 515}, {x: 565, y: 515},
-    // 12 Spaced Ramp Spots
-    {x: 163, y: 765}, {x: 248, y: 765}, {x: 333, y: 765}, {x: 418, y: 765},
-    {x: 503, y: 765}, {x: 588, y: 765}, {x: 673, y: 765},
-    {x: 248, y: 945}, {x: 333, y: 945}, {x: 418, y: 945},
-    {x: 503, y: 945}, {x: 588, y: 945}
+    // 15 Ramp Spots (spaced out)
+    {x: 160, y: 765}, {x: 235, y: 765}, {x: 310, y: 765}, {x: 385, y: 765},
+    {x: 460, y: 765}, {x: 535, y: 765}, {x: 610, y: 765}, {x: 685, y: 765},
+    {x: 235, y: 945}, {x: 310, y: 945}, {x: 385, y: 945}, {x: 460, y: 945},
+    {x: 535, y: 945}, {x: 610, y: 945}, {x: 685, y: 945}
 ];
 
 const snapThreshold = 80;
@@ -39,6 +39,7 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
+// Initialize
 planes.forEach(plane => {
     updatePlane(plane);
     plane.el.addEventListener('mousedown', () => {
@@ -51,7 +52,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag & Drop
+// Drag
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -104,7 +105,7 @@ document.addEventListener('mouseup', () => {
     if (currentDragPlane === selectedPlane) updateTelemetry();
 });
 
-// Rotation
+// Keyboard Rotation
 function rotate(degrees) {
     selectedPlane.angle = (selectedPlane.angle + degrees + 360) % 360;
     updatePlane(selectedPlane);
@@ -116,7 +117,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') rotate(15);
 });
 
-// Dropdown (Now Present)
+// Dropdown
 const spotDropdown = document.getElementById('spot-assign');
 spotDropdown.addEventListener('change', () => {
     if (!spotDropdown.value) return;
