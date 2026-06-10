@@ -102,7 +102,7 @@ body {
     width: 170px;
     height: 145px;
     cursor: grab;
-    z-index: 30;
+    z-index: 40; /* High z-index keeps planes safely above indicator nodes */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,7 +110,7 @@ body {
 
 .airplane-container.active {
     filter: drop-shadow(0 0 25px #38bdf8);
-    z-index: 35;
+    z-index: 45;
 }
 
 .plane-visual {
@@ -136,7 +136,7 @@ body {
     pointer-events: none;
 }
 
-/* Background Spot Layout Indicators */
+/* Background Reference Nodes outlined to match image */
 .map-spot-indicator {
     position: absolute;
     width: 44px;
@@ -148,13 +148,14 @@ body {
     pointer-events: none;
 }
 
+/* Spot labels positioned at the bottom */
 .map-spot-label {
     position: absolute;
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
     background: #0f172a;
-    color: #64748b;
+    color: #38bdf8;
     font-family: monospace;
     font-size: 11px;
     font-weight: bold;

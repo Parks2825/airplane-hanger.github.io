@@ -1,8 +1,8 @@
 const hangar = document.getElementById('hangar-frame');
 
 const planes = [
-    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 160, y: 940, angle: 180, id: 'DA40-1' },
-    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 285, y: 940, angle: 180, id: 'DA40-2' }
+    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 130, y: 940, angle: 180, id: 'DA40-1' },
+    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 255, y: 940, angle: 180, id: 'DA40-2' }
 ];
 
 let selectedPlane = planes[0];
@@ -12,7 +12,7 @@ const xDisplay = document.getElementById('telemetry-x');
 const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
-// Compressed whiteboard layouts entirely bounded inside the canvas margins
+// Adjusted map locations completely scaled within hangar margins
 const parkingSpots = [
     // --- CLUSTERED HANGAR SPOTS (A - J) ---
     { name: "A", x: 920, y: 200, targetAngle: 150 },  
@@ -71,10 +71,13 @@ function updatePlane(plane) {
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
-// Initial Configuration Setup Loop
-renderMapGrid();
+// CRITICAL PIPELINE INITIALIZATION ORDER
+renderMapGrid(); // 1. Render map circles first
+
 planes.forEach(plane => {
     updatePlane(plane);
+    hangar.appendChild(plane.el); // 2. Pull plane elements onto the foreground layer
+    
     plane.el.addEventListener('mousedown', () => {
         selectedPlane = plane;
         planes.forEach(p => p.el.classList.remove('active'));
