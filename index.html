@@ -22,10 +22,9 @@
         <div>X: <span id="telemetry-x" class="telemetry-highlight">—</span></div>
         <div>Y: <span id="telemetry-y" class="telemetry-highlight">—</span></div>
         
-        <!-- PROMINENT DROPDOWN -->
-        <div style="margin-top:15px; padding:12px; background:rgba(15,23,42,0.8); border-radius:8px; border:2px solid #38bdf8;">
+        <div style="margin-top:15px; padding-top:10px; border-top:2px solid #334155;">
             <strong style="color:#38bdf8;">ASSIGN SPOT →</strong><br>
-            <select id="spot-assign" style="margin-top:8px; padding:10px; width:100%; background:#0f172a; color:#e2e8f0; border:2px solid #38bdf8; border-radius:6px; font-size:15px;">
+            <select id="spot-assign" style="margin-top:8px; padding:8px; width:100%; background:#1e293b; color:#e2e8f0; border:2px solid #38bdf8; border-radius:6px; font-size:14px;">
                 <option value="">Select Spot...</option>
                 <option value="0">A</option><option value="1">B</option><option value="2">C</option>
                 <option value="3">D</option><option value="4">E</option><option value="5">F</option>
@@ -48,12 +47,46 @@
     <div class="hangar-wrapper" id="hangar-frame">
         <svg class="hangar-svg" viewBox="0 0 1150 1250" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="1150" height="1250" fill="#334155"/>
+            <!-- Hangar -->
             <rect x="80" y="80" width="940" height="540" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
+            <!-- Ramp -->
             <rect x="80" y="640" width="940" height="480" fill="#475569" rx="8"/>
+
+            <!-- A-J Parking Boxes -->
+            <g><rect x="160" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="225" y="205" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">A</text></g>
+            <g><rect x="320" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="385" y="205" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">B</text></g>
+            <g><rect x="480" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="545" y="205" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">C</text></g>
+            <g><rect x="640" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="705" y="205" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">D</text></g>
+            <g><rect x="800" y="140" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="865" y="205" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">E</text></g>
+
+            <g><rect x="220" y="300" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="285" y="365" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">F</text></g>
+            <g><rect x="500" y="300" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="565" y="365" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">G</text></g>
+            <g><rect x="780" y="300" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="845" y="365" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">H</text></g>
+
+            <g><rect x="220" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="285" y="525" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">I</text></g>
+            <g><rect x="500" y="460" width="130" height="110" rx="8" fill="none" stroke="#9f7aea" stroke-width="7"/><text x="565" y="525" fill="#e2e8f0" font-size="32" font-weight="bold" text-anchor="middle">J</text></g>
+
+            <!-- 15 Ramp Spots -->
+            <g><rect x="130" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="160" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">1</text></g>
+            <g><rect x="205" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="235" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">2</text></g>
+            <g><rect x="280" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="310" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">3</text></g>
+            <g><rect x="355" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="385" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">4</text></g>
+            <g><rect x="430" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="460" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">5</text></g>
+            <g><rect x="505" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="535" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">6</text></g>
+            <g><rect x="580" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="610" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">7</text></g>
+            <g><rect x="655" y="680" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="685" y="795" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">8</text></g>
+
+            <g><rect x="205" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="235" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">9</text></g>
+            <g><rect x="280" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="310" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">10</text></g>
+            <g><rect x="355" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="385" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">11</text></g>
+            <g><rect x="430" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="460" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">12</text></g>
+            <g><rect x="505" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="535" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">13</text></g>
+            <g><rect x="580" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="610" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">14</text></g>
+            <g><rect x="655" y="860" width="60" height="170" rx="6" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="8,4"/><text x="685" y="975" fill="#e2e8f0" font-size="20" font-weight="bold" text-anchor="middle">15</text></g>
         </svg>
 
         <!-- Planes -->
-        <div id="airplane1" class="airplane-container active" style="left: 130px; top: 720px;">
+        <div id="airplane1" class="airplane-container active" style="left: 75px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff"/>
@@ -63,7 +96,7 @@
             <div class="plane-text-block">DA40-1</div>
         </div>
 
-        <div id="airplane2" class="airplane-container" style="left: 255px; top: 720px;">
+        <div id="airplane2" class="airplane-container" style="left: 235px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc"/>
