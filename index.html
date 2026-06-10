@@ -17,25 +17,19 @@
         <h3>Hangar Facility Data</h3>
         <div>BAYS STATUS: <span style="color:#22c55e">OPEN</span></div>
         <div>DIMENSIONS: <span class="telemetry-highlight">100' × 100'</span></div>
-        <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">—</span></div>
+        <div>SELECTED: <span id="selected-plane" class="telemetry-highlight">DA40-1</span></div>
         <div>ANGLE: <span id="telemetry-rot" class="telemetry-highlight">0°</span></div>
         <div>X: <span id="telemetry-x" class="telemetry-highlight">—</span></div>
         <div>Y: <span id="telemetry-y" class="telemetry-highlight">—</span></div>
         
         <div style="margin-top:15px; padding-top:10px; border-top:2px solid #334155;">
             <strong style="color:#38bdf8;">ASSIGN SPOT →</strong><br>
-            <select id="spot-assign" style="margin-top:8px; padding:8px; width:100%; background:#1e293b; color:#e2e8f0; border:2px solid #38bdf8; border-radius:6px; font-size:14px; cursor:pointer;">
+            <select id="spot-assign" style="margin-top:8px; padding:8px; width:100%; background:#1e293b; color:#e2e8f0; border:2px solid #38bdf8; border-radius:6px; font-size:14px;">
                 <option value="">Select Spot...</option>
-                <option value="0">Spot A</option>
-                <option value="1">Spot B</option>
-                <option value="2">Spot C</option>
-                <option value="3">Spot D</option>
-                <option value="4">Spot E</option>
-                <option value="5">Spot F</option>
-                <option value="6">Spot G</option>
-                <option value="7">Spot H</option>
-                <option value="8">Spot I</option>
-                <option value="9">Spot J</option>
+                <option value="0">A</option><option value="1">B</option><option value="2">C</option>
+                <option value="3">D</option><option value="4">E</option><option value="5">F</option>
+                <option value="6">G</option><option value="7">H</option><option value="8">I</option>
+                <option value="9">J</option>
                 <option value="10">Ramp 1</option><option value="11">Ramp 2</option><option value="12">Ramp 3</option>
                 <option value="13">Ramp 4</option><option value="14">Ramp 5</option><option value="15">Ramp 6</option>
                 <option value="16">Ramp 7</option><option value="17">Ramp 8</option><option value="18">Ramp 9</option>
@@ -51,13 +45,16 @@
     </div>
 
     <div class="hangar-wrapper" id="hangar-frame">
-        <svg class="hangar-svg" viewBox="0 0 1150 1150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1150" height="1150" fill="#334155"/>
-            <rect x="80" y="80" width="990" height="780" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
-            <rect x="80" y="880" width="990" height="210" fill="#475569" rx="8"/>
+        <svg class="hangar-svg" viewBox="0 0 1150 1250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1150" height="1250" fill="#334155"/>
+            <!-- Hangar -->
+            <rect x="80" y="80" width="940" height="540" fill="#94a3b8" stroke="#1e293b" stroke-width="12" rx="12"/>
+            <!-- Ramp -->
+            <rect x="80" y="640" width="940" height="480" fill="#475569" rx="8"/>
         </svg>
 
-        <div id="airplane1" class="airplane-container active">
+        <!-- Planes on Ramp -->
+        <div id="airplane1" class="airplane-container active" style="left: 75px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#ffffff"/>
@@ -67,7 +64,7 @@
             <div class="plane-text-block">DA40-1</div>
         </div>
 
-        <div id="airplane2" class="airplane-container">
+        <div id="airplane2" class="airplane-container" style="left: 235px; top: 720px;">
             <div class="plane-visual">
                 <svg viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100,5 L102,9 L111,10 L111,15 L104,18 L104,24 L107,26 L108,35 C108,35 119,38 123,38 L188,38 C194,38 197,41 199,46 C199,51 197,51 194,51 L173,51 L173,53 C173,53 162,53 158,52 L121,52 C116,52 109.5,49 108.5,53 L104.5,91 C104.5,91 113,92 119,95 L129,95 C135,95 140,97 140,101 C140,105 133,105 125,105 L114,105 L111,101 L103,101 L102,109 L98,109 L97,101 L89,101 L86,105 L75,105 C67,105 60,105 60,101 C60,97 65,95 71,95 L81,95 C87,92 95.5,91 95.5,91 L91.5,53 C90.5,49 84,52 79,52 L42,52 C38,53 27,53 27,53 L27,51 L6,51 C3,51 1,51 1,46 C3,41 6,38 12,38 L77,38 C81,38 92,35 92,35 L93,26 L96,24 L96,18 L89,15 L89,10 L98,9 Z" fill="#a5b4fc"/>
