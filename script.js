@@ -1,8 +1,8 @@
 const hangar = document.getElementById('hangar-frame');
 
 const planes = [
-    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 160, y: 765, angle: 180, id: 'DA40-1' },
-    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 255, y: 765, angle: 180, id: 'DA40-2' }
+    { el: document.getElementById('airplane1'), visual: document.querySelector('#airplane1 .plane-visual'), x: 160, y: 765, angle: 0, id: 'DA40-1' },
+    { el: document.getElementById('airplane2'), visual: document.querySelector('#airplane2 .plane-visual'), x: 235, y: 765, angle: 180, id: 'DA40-2' }
 ];
 
 let selectedPlane = planes[0];
@@ -13,15 +13,36 @@ const yDisplay = document.getElementById('telemetry-y');
 const selectedDisplay = document.getElementById('selected-plane');
 
 const parkingSpots = [
-    // A-J
-    {x: 225, y: 195}, {x: 385, y: 195}, {x: 545, y: 195}, {x: 705, y: 195}, {x: 865, y: 195},
-    {x: 285, y: 355}, {x: 565, y: 355}, {x: 845, y: 355},
-    {x: 285, y: 515}, {x: 565, y: 515},
-    // 15 Ramp Spots
-    {x: 160, y: 765}, {x: 235, y: 765}, {x: 310, y: 765}, {x: 385, y: 765},
-    {x: 460, y: 765}, {x: 535, y: 765}, {x: 610, y: 765}, {x: 685, y: 765},
-    {x: 235, y: 945}, {x: 310, y: 945}, {x: 385, y: 945}, {x: 460, y: 945},
-    {x: 535, y: 945}, {x: 610, y: 945}, {x: 685, y: 945}
+    // A-J inside hangar (180° nose toward door)
+    {x: 225, y: 195, angle: 180}, 
+    {x: 385, y: 195, angle: 180}, 
+    {x: 545, y: 195, angle: 180}, 
+    {x: 705, y: 195, angle: 180}, 
+    {x: 865, y: 195, angle: 180},
+    {x: 285, y: 355, angle: 180}, 
+    {x: 565, y: 355, angle: 180}, 
+    {x: 845, y: 355, angle: 180},
+    {x: 285, y: 515, angle: 180}, 
+    {x: 565, y: 515, angle: 180},
+
+    // Ramp Group 1-6 (alternating orientation)
+    {x: 160, y: 765, angle: 0},     // 1
+    {x: 235, y: 765, angle: 180},   // 2
+    {x: 310, y: 765, angle: 0},     // 3
+    {x: 385, y: 765, angle: 180},   // 4
+    {x: 460, y: 765, angle: 0},     // 5
+    {x: 535, y: 765, angle: 180},   // 6
+
+    // Ramp Group 7-15 (alternating orientation)
+    {x: 610, y: 765, angle: 0},     // 7
+    {x: 685, y: 765, angle: 180},   // 8
+    {x: 235, y: 945, angle: 0},     // 9
+    {x: 310, y: 945, angle: 180},   // 10
+    {x: 385, y: 945, angle: 0},     // 11
+    {x: 460, y: 945, angle: 180},   // 12
+    {x: 535, y: 945, angle: 0},     // 13
+    {x: 610, y: 945, angle: 180},   // 14
+    {x: 685, y: 945, angle: 0}      // 15
 ];
 
 const snapThreshold = 80;
@@ -35,7 +56,7 @@ function updateTelemetry() {
 
 function updatePlane(plane) {
     plane.el.style.left = (plane.x - 85) + 'px';
-    plane.el.style.top = (plane.y - 72) + 'px';   // Center of airplane
+    plane.el.style.top = (plane.y - 72) + 'px';
     plane.visual.style.setProperty('--plane-angle', plane.angle + 'deg');
 }
 
@@ -52,7 +73,7 @@ planes.forEach(plane => {
 
 updateTelemetry();
 
-// Drag
+// Drag System
 let isDragging = false;
 let currentDragPlane = null;
 
@@ -95,7 +116,7 @@ document.addEventListener('mouseup', () => {
     if (closest && minDist < snapThreshold) {
         currentDragPlane.x = closest.x;
         currentDragPlane.y = closest.y;
-        currentDragPlane.angle = 180;
+        currentDragPlane.angle = closest.angle || 180;
         currentDragPlane.el.style.transition = 'all 0.45s ease-out';
     } else {
         currentDragPlane.el.style.transition = 'transform 0.15s';
@@ -126,7 +147,7 @@ spotDropdown.addEventListener('change', () => {
     if (target) {
         selectedPlane.x = target.x;
         selectedPlane.y = target.y;
-        selectedPlane.angle = 180;
+        selectedPlane.angle = target.angle || 180;
         updatePlane(selectedPlane);
         updateTelemetry();
         selectedPlane.el.style.transition = 'all 0.65s ease-out';
