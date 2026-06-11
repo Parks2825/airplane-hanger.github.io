@@ -27,22 +27,22 @@ const parkingSpots = [
 
     // Ramp Group 1-6 (alternating orientation)
     {x: 160, y: 765, angle: 0},     // 1
-    {x: 235, y: 765, angle: 180},   // 2
+    {x: 198, y: 950, angle: 180},   // 2
     {x: 310, y: 765, angle: 0},     // 3
-    {x: 385, y: 765, angle: 180},   // 4
+    {x: 347, y: 950, angle: 180},   // 4
     {x: 460, y: 765, angle: 0},     // 5
-    {x: 535, y: 765, angle: 180},   // 6
+    {x: 497, y: 950, angle: 180},   // 6
 
     // Ramp Group 7-15 (alternating orientation)
     {x: 610, y: 765, angle: 0},     // 7
-    {x: 685, y: 765, angle: 180},   // 8
-    {x: 235, y: 945, angle: 0},     // 9
-    {x: 310, y: 945, angle: 180},   // 10
-    {x: 385, y: 945, angle: 0},     // 11
-    {x: 460, y: 945, angle: 180},   // 12
-    {x: 535, y: 945, angle: 0},     // 13
-    {x: 610, y: 945, angle: 180},   // 14
-    {x: 685, y: 945, angle: 0}      // 15
+    {x: 647, y: 950, angle: 180},   // 8
+    {x: 684, y: 765, angle: 0},     // 9
+    {x: 721, y: 945, angle: 180},   // 10
+    {x: 758, y: 765, angle: 0},     // 11
+    {x: 795, y: 945, angle: 180},   // 12
+    {x: 832, y: 765, angle: 0},     // 13
+    {x: 869, y: 945, angle: 180},   // 14
+    {x: 906, y: 765, angle: 0}      // 15
 ];
 
 const snapThreshold = 80;
