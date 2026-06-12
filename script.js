@@ -26,7 +26,7 @@ const parkingSpots = [
     {x: 565, y: 515, angle: 180},
 
     // Ramp Group 1-6 (alternating orientation)
-    {x: 162, y: 750, angle: 0},     // 1
+    {x: 168, y: 720, angle: 0},     // 1
     {x: 198, y: 950, angle: 180},   // 2
     {x: 310, y: 765, angle: 0},     // 3
     {x: 347, y: 950, angle: 180},   // 4
